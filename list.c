@@ -7,7 +7,6 @@
 #include <stdio.h>
 #include "list.h"
 
-
 /** Struct for each node of the tree */
 struct tree_node_s
 {
@@ -63,8 +62,6 @@ struct linked_list_s
   struct list_node_s *head, *tail;
   
 };
-
-
 
 int main()
 {
