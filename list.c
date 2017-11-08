@@ -5,6 +5,7 @@
  */
 
 #include <stdio.h>
+#include <stdlib.h>
 #include "list.h"
 
 /** Struct for each node of the tree */
@@ -35,6 +36,15 @@ struct list_node_s
 
 };
 
+/** Struct for the linked list */
+struct linked_list_s
+{
+
+  // Sentinel nodes
+  List_Node *head, *tail;
+  
+};
+
 /** Struct for the iterator of the linked list */
 struct iterator_s
 {
@@ -46,26 +56,111 @@ struct iterator_s
   
 };
 
+/** Function that gets the node at a given index and returns and iterator */
+Iterator* get( Linked_List *list, int index )
+{
+
+  // Handle only valid lists
+  if( list->head == NULL )
+    {
+      fprintf( stderr, "Can't create iterator for incomplete list. Missing head node.");
+      return NULL;
+    }
+  if( list->tail == NULL )
+    {
+      fprintf( stderr, "Can't create iterator for incomplete list. Missing tail node.");
+      return NULL;
+    }
+  
+  // Iterator pointing to the head of the list
+  Iterator iter = { 0, list->head->next }, *iter_ptr = malloc( sizeof( Iterator ) );
+  iter_ptr = &iter;
+
+  // If index is out of range, iterator to tail is returned
+  while( iter.node->next != NULL )
+    {
+      if( iter.index == index )
+        return iter_ptr;
+      ++iter.index;
+      iter.node = iter.node->next;
+    }
+
+  fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.");
+  return iter_ptr;
+  
+}
+
+/** Initializes a tree node */
+Tree_Node* init_tree_node()
+{
+
+  Tree_Node *tree_node = malloc( sizeof( Tree_Node ) );
+
+  if( tree_node != NULL )
+    {
+      
+      tree_node->type = LEAF;
+      tree_node->value = -2;
+      tree_node->frequency = 0;
+      tree_node->left = NULL;
+      tree_node->right = NULL;
+      
+    }
+
+  return tree_node;
+  
+}
+
+/** Initialize the list node */
+List_Node* init_list_node()
+{
+
+  List_Node *node = malloc( sizeof( List_Node ) );
+  if( node != NULL )
+    {
+      node->value = init_tree_node();
+      node->next = NULL;
+      node->prev = NULL;
+    }
+
+  return node;
+  
+}
+
+/** Initialize a list */
+Linked_List* init_list( )
+{
+
+  Linked_List *list = malloc( sizeof( Linked_List ) );
+
+  if( list != NULL )
+    {
+      list->head = init_list_node();
+      list->tail = init_list_node();
+    }
+  
+  if( list->head != NULL )
+    list->head->next = list->tail;
+  if( list->tail != NULL )
+    list->tail->prev = list->head;
+
+  return list;
+  
+}
+
 /** Function that assigns the iterator to the given index */
-/*
 Iterator* insert( Linked_List list, int index )
 {
-
+  return NULL;
 }
-*/
 
-/** Struct for the linked list */
-struct linked_list_s
-{
 
-  // Sentinel nodes
-  struct list_node_s *head, *tail;
-  
-};
 
 int main()
 {
 
-  
+  Linked_List *list = init_list();
+  Iterator *iter = get( list, 1 );
+  printf( "%d, %d\n", iter->node->value->value, iter->index );
   
 }
