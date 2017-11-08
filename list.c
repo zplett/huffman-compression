@@ -24,7 +24,7 @@ struct tree_node_s
 
 };
 
-  
+/** Struct for each node of the linked list */  
 struct list_node_s
 {
   
@@ -34,9 +34,28 @@ struct list_node_s
 
 };
 
+/** Struct for the iterator of the linked list */
+struct iterator_s
+{
+  
+  // Index of the node pointed to
+  int index;
+  // Node pointed to
+  List_Node *node;
+  
+};
+
+/** Function that assigns the iterator to the given index */
+/*
+Iterator* insert( Linked_List list, int index )
+{
+
+}
+*/
+
 int main()
 {
 
-  return 0;
+  
   
 }
