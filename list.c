@@ -2,6 +2,7 @@
  *
  * This file contains the implementations of our list and tree structures
  * for this lab
+ *
  */
 
 #include <stdio.h>
@@ -94,17 +95,16 @@ Iterator* get( Linked_List *list, int index )
 Tree_Node* init_tree_node()
 {
 
+  // Allocates memory for the tree node
   Tree_Node *tree_node = malloc( sizeof( Tree_Node ) );
-
+  // Initializes the value fields of a tree node
   if( tree_node != NULL )
     {
-      
       tree_node->type = LEAF;
       tree_node->value = -2;
       tree_node->frequency = 0;
       tree_node->left = NULL;
-      tree_node->right = NULL;
-      
+      tree_node->right = NULL; 
     }
 
   return tree_node;
@@ -115,7 +115,10 @@ Tree_Node* init_tree_node()
 List_Node* init_list_node()
 {
 
+  // Allocates memory for the list node
   List_Node *node = malloc( sizeof( List_Node ) );
+  // Initializes the node's value and defines the node's next
+  // and previous fields as null
   if( node != NULL )
     {
       node->value = init_tree_node();
@@ -131,14 +134,15 @@ List_Node* init_list_node()
 Linked_List* init_list( )
 {
 
+  // Allocates memory for the list
   Linked_List *list = malloc( sizeof( Linked_List ) );
-
+  // Initializes the sentinel nodes
   if( list != NULL )
     {
       list->head = init_list_node();
       list->tail = init_list_node();
     }
-  
+  // Links sentinel nodes together
   if( list->head != NULL )
     list->head->next = list->tail;
   if( list->tail != NULL )
@@ -155,7 +159,7 @@ Iterator* insert( Linked_List list, int index )
 }
 
 
-
+/** Main function */
 int main()
 {
 
