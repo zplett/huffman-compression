@@ -62,7 +62,7 @@ struct linked_list_s
   // Sentinel nodes
   struct list_node_s *head, *tail;
   
-}
+};
 
 
 
