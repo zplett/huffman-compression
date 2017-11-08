@@ -8,7 +8,7 @@
 #include "list.h"
 
 
-/** Struct for each node of the tree.*/
+/** Struct for each node of the tree */
 struct tree_node_s
 {
   
@@ -24,15 +24,27 @@ struct tree_node_s
 
 };
 
-  
+/** Struct for each node of the linked list */  
 struct list_node_s
 {
-  
+
+  // Tree node with the value
   Tree_Node *value;
+  // This node's previous and next node fields
   struct list_node_s *prev;
   struct list_node_s *next;
 
 };
+
+/** Struct for the linked list */
+struct linked_list_s
+{
+
+  // Sentinel nodes
+  struct list_node_s *head, *tail;
+  
+}
+
 
 int main()
 {
