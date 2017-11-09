@@ -62,28 +62,27 @@ Iterator* get( Linked_List *list, int index )
 {
 
   // Handle only valid lists
-  if( list->head == NULL )
+  if( list -> head == NULL )
     {
       fprintf( stderr, "Can't create iterator for incomplete list. Missing head node.");
       return NULL;
     }
-  if( list->tail == NULL )
+  if( list -> tail == NULL )
     {
       fprintf( stderr, "Can't create iterator for incomplete list. Missing tail node.");
       return NULL;
     }
-  
   // Iterator pointing to the head of the list
-  Iterator iter = { 0, list->head->next }, *iter_ptr = malloc( sizeof( Iterator ) );
+  Iterator iter = { 0, list -> head -> next }, *iter_ptr = malloc( sizeof( Iterator ) );
   iter_ptr = &iter;
 
   // If index is out of range, iterator to tail is returned
-  while( iter.node->next != NULL )
+  while( iter.node -> next != NULL )
     {
       if( iter.index == index )
         return iter_ptr;
       ++iter.index;
-      iter.node = iter.node->next;
+      iter.node = iter.node -> next;
     }
 
   fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.");
@@ -100,11 +99,11 @@ Tree_Node* init_tree_node()
   // Initializes the value fields of a tree node
   if( tree_node != NULL )
     {
-      tree_node->type = LEAF;
-      tree_node->value = -2;
-      tree_node->frequency = 0;
-      tree_node->left = NULL;
-      tree_node->right = NULL; 
+      tree_node -> type = LEAF;
+      tree_node -> value = -2;
+      tree_node -> frequency = 0;
+      tree_node -> left = NULL;
+      tree_node -> right = NULL; 
     }
 
   return tree_node;
@@ -121,9 +120,9 @@ List_Node* init_list_node()
   // and previous fields as null
   if( node != NULL )
     {
-      node->value = init_tree_node();
-      node->next = NULL;
-      node->prev = NULL;
+      node -> value = init_tree_node();
+      node -> next = NULL;
+      node -> prev = NULL;
     }
 
   return node;
@@ -139,14 +138,14 @@ Linked_List* init_list( )
   // Initializes the sentinel nodes
   if( list != NULL )
     {
-      list->head = init_list_node();
-      list->tail = init_list_node();
+      list -> head = init_list_node();
+      list -> tail = init_list_node();
     }
   // Links sentinel nodes together
-  if( list->head != NULL )
-    list->head->next = list->tail;
-  if( list->tail != NULL )
-    list->tail->prev = list->head;
+  if( list -> head != NULL )
+    list -> head -> next = list -> tail;
+  if( list -> tail != NULL )
+    list -> tail -> prev = list -> head;
 
   return list;
   
@@ -158,13 +157,12 @@ Iterator* insert( Linked_List list, int index )
   return NULL;
 }
 
-
 /** Main function */
 int main()
 {
 
   Linked_List *list = init_list();
   Iterator *iter = get( list, 1 );
-  printf( "%d, %d\n", iter->node->value->value, iter->index );
+  printf( "%d, %d\n", iter -> node -> value -> value, iter -> index );
   
 }
