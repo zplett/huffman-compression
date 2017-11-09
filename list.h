@@ -20,6 +20,11 @@ typedef enum node_type { INTERNAL, LEAF } node_type;
 Iterator* get( Linked_List *list, int index ); 
 #endif
 
+#ifndef TREE_LEAF_INIT
+#define TREE_LEAF_INIT
+Tree_Node* init_tree_leaf();
+#endif
+
 #ifndef TREE_NODE_INIT
 #define TREE_NODE_INIT
 Tree_Node* init_tree_node();

@@ -73,7 +73,7 @@ Iterator* get( Linked_List *list, int index )
       return NULL;
     }
   // Iterator pointing to the head of the list
-  Iterator iter = { 0, list -> head -> next }, *iter_ptr = malloc( sizeof( Iterator ) );
+  Iterator iter = { 0, list -> head }, *iter_ptr = malloc( sizeof( Iterator ) );
   iter_ptr = &iter;
 
   // If index is out of range, iterator to tail is returned
@@ -90,8 +90,8 @@ Iterator* get( Linked_List *list, int index )
   
 }
 
-/** Initializes a tree node */
-Tree_Node* init_tree_node()
+/** Initializes a tree leaf node */
+Tree_Node* init_tree_leaf()
 {
 
   // Allocates memory for the tree node
@@ -108,6 +108,26 @@ Tree_Node* init_tree_node()
 
   return tree_node;
   
+}
+
+/** Initializes an internal tree node */
+Tree_Node* init_tree_node()
+{
+
+  // Allocates memory for the tree node
+  Tree_Node *tree_node = malloc( sizeof( Tree_Node ) );
+  // Initializes the value fields of a tree node
+  if( tree_node != NULL )
+    {
+      tree_node -> type = INTERNAL;
+      tree_node -> value = -2;
+      tree_node -> frequency = 0;
+      tree_node -> left = NULL;
+      tree_node -> right = NULL;
+    }
+
+  return tree_node;
+
 }
 
 /** Initialize the list node */
@@ -162,6 +182,14 @@ int main()
 {
 
   Linked_List *list = init_list();
+  List_Node *node = init_list_node();
+  Tree_Node *tree_node = init_tree_leaf();
+  tree_node -> value = 75;
+  node -> value = tree_node;
+  node -> prev = list -> head;
+  node -> next = list -> tail;
+  list -> head -> next = node;
+  list -> tail -> prev = node;
   Iterator *iter = get( list, 1 );
   printf( "%d, %d\n", iter -> node -> value -> value, iter -> index );
   
