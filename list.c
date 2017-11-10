@@ -73,7 +73,7 @@ Iterator* get( Linked_List *list, int index )
       return NULL;
     }
   // Iterator pointing to the head of the list
-  Iterator iter = { 0, list -> head }, *iter_ptr = malloc( sizeof( Iterator ) );
+  Iterator iter = { 0, list -> head -> next }, *iter_ptr = malloc( sizeof( Iterator ) );
   iter_ptr = &iter;
 
   // If index is out of range, iterator to tail is returned
@@ -85,7 +85,11 @@ Iterator* get( Linked_List *list, int index )
       iter.node = iter.node -> next;
     }
 
-  fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.");
+  // If the while loop finished then it hit tail ( if index is 0 and the list is empty, it will always return tail )
+  if( index == 0 )
+    fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
+  else if( index != 0 )
+    fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
   return iter_ptr;
   
 }
@@ -172,9 +176,33 @@ Linked_List* init_list( )
 }
 
 /** Function that assigns the iterator to the given index */
-Iterator* insert( Linked_List list, int index )
+Iterator* insert( Linked_List *list, int index, char value )
 {
-  return NULL;
+
+  // Make a new node
+  List_Node *node = init_list_node();
+  // The value of the tree node in the list node is set to parameter value
+  node->value->value = value;
+  // Grab iterator to the node we want to insert in front of
+  Iterator *target_iter = malloc( sizeof( Iterator* ) );
+  // If list is empty
+  if( list->head->next == list->tail )
+    target_iter->node = list->tail; 
+  // If list is not empty
+  else  
+    target_iter = get( list, index );
+  // Link the new node in place
+  List_Node *temp = target_iter->node->prev;
+  target_iter->node->prev = node;
+  node->next = target_iter->node;
+  node->prev = temp;
+  temp->next = node;
+  // Reassign the iterator to the new node
+  target_iter->node = node;
+  target_iter->index = index;
+  // Return re assigned iterator
+  return target_iter;
+  
 }
 
 /** Main function */
@@ -182,15 +210,9 @@ int main()
 {
 
   Linked_List *list = init_list();
-  List_Node *node = init_list_node();
-  Tree_Node *tree_node = init_tree_leaf();
-  tree_node -> value = 75;
-  node -> value = tree_node;
-  node -> prev = list -> head;
-  node -> next = list -> tail;
-  list -> head -> next = node;
-  list -> tail -> prev = node;
-  Iterator *iter = get( list, 1 );
+  for( int i = 0; i < 10; ++i )
+    insert( list, 0, i );
+  Iterator *iter = get( list, 3 );
   printf( "%d, %d\n", iter -> node -> value -> value, iter -> index );
   
 }

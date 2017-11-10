@@ -1,0 +1,191 @@
+\hypertarget{list_8h}{}\section{list.\+h File Reference}
+\label{list_8h}\index{list.\+h@{list.\+h}}
+\subsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\#define \mbox{\hyperlink{list_8h_af96e3e59d0fe57a307321d08499b0cfc}{N\+O\+D\+E\+\_\+\+T\+Y\+PE}}
+\item 
+\#define \mbox{\hyperlink{list_8h_a982a66f513611f7f83ebfa4b4ecf1df9}{G\+ET}}
+\item 
+\#define \mbox{\hyperlink{list_8h_a61e116cd3ee951c0c57d22927b945c54}{T\+R\+E\+E\+\_\+\+L\+E\+A\+F\+\_\+\+I\+N\+IT}}
+\item 
+\#define \mbox{\hyperlink{list_8h_af594a3474c045c016402b5809e4f89ed}{T\+R\+E\+E\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}}
+\item 
+\#define \mbox{\hyperlink{list_8h_ad8ef74228d8ff4cc7599a90b39d4ad3b}{L\+I\+S\+T\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}}
+\item 
+\#define \mbox{\hyperlink{list_8h_ac27afc3a5d012016ddba57a5de8f707f}{L\+I\+N\+K\+E\+D\+\_\+\+L\+I\+S\+T\+\_\+\+I\+N\+IT}}
+\item 
+\#define \mbox{\hyperlink{list_8h_a9cec4693931a816d4ad374c3a00e0dae}{I\+N\+S\+E\+RT}}
+\end{DoxyCompactItemize}
+\subsection*{Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+typedef struct \mbox{\hyperlink{structlist__node__s}{list\+\_\+node\+\_\+s}} \mbox{\hyperlink{list_8h_a541ea301c0b5aedcd24808db52ba1036}{List\+\_\+\+Node}}
+\item 
+typedef struct \mbox{\hyperlink{structtree__node__s}{tree\+\_\+node\+\_\+s}} \mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}}
+\item 
+typedef struct \mbox{\hyperlink{structiterator__s}{iterator\+\_\+s}} \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}
+\item 
+typedef struct \mbox{\hyperlink{structlinked__list__s}{linked\+\_\+list\+\_\+s}} \mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}}
+\item 
+typedef enum \mbox{\hyperlink{list_8h_a6a276b85e2da28c5f9c3dbce61c55682}{node\+\_\+type}} \mbox{\hyperlink{list_8h_aee639bb67f1a0921cc205033a5f480a0}{node\+\_\+type}}
+\end{DoxyCompactItemize}
+\subsection*{Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \mbox{\hyperlink{list_8h_a6a276b85e2da28c5f9c3dbce61c55682}{node\+\_\+type}} \{ \mbox{\hyperlink{list_8h_a6a276b85e2da28c5f9c3dbce61c55682adc7588f17692aa631f375290d50a2c8e}{I\+N\+T\+E\+R\+N\+AL}}, 
+\mbox{\hyperlink{list_8h_a6a276b85e2da28c5f9c3dbce61c55682a150d9833918207030adb030ccc759c20}{L\+E\+AF}}
+ \}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8h_a8e524bbabcd1aa59231fc1590034d6dc}{get}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list, int index)
+\item 
+\mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}} $\ast$ \mbox{\hyperlink{list_8h_ac2527342441e5d73c408522dab528d1c}{init\+\_\+tree\+\_\+leaf}} ()
+\item 
+\mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}} $\ast$ \mbox{\hyperlink{list_8h_aa74059990bd0beada7c520b77d36d084}{init\+\_\+tree\+\_\+node}} ()
+\item 
+\mbox{\hyperlink{list_8h_a541ea301c0b5aedcd24808db52ba1036}{List\+\_\+\+Node}} $\ast$ \mbox{\hyperlink{list_8h_a993df07562dd2a963b5d990d5e3f1acf}{init\+\_\+list\+\_\+node}} ()
+\item 
+\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$ \mbox{\hyperlink{list_8h_a64c721d2cad45f2baf10a76179280c32}{init\+\_\+list}} ()
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8h_aa7fd22cb851ff9c99d3eb7a801a2191f}{insert}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list, int index, char value)
+\end{DoxyCompactItemize}
+
+
+\subsection{Macro Definition Documentation}
+\mbox{\Hypertarget{list_8h_a982a66f513611f7f83ebfa4b4ecf1df9}\label{list_8h_a982a66f513611f7f83ebfa4b4ecf1df9}} 
+\index{list.\+h@{list.\+h}!G\+ET@{G\+ET}}
+\index{G\+ET@{G\+ET}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{G\+ET}{GET}}
+{\footnotesize\ttfamily \#define G\+ET}
+
+\mbox{\Hypertarget{list_8h_a9cec4693931a816d4ad374c3a00e0dae}\label{list_8h_a9cec4693931a816d4ad374c3a00e0dae}} 
+\index{list.\+h@{list.\+h}!I\+N\+S\+E\+RT@{I\+N\+S\+E\+RT}}
+\index{I\+N\+S\+E\+RT@{I\+N\+S\+E\+RT}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{I\+N\+S\+E\+RT}{INSERT}}
+{\footnotesize\ttfamily \#define I\+N\+S\+E\+RT}
+
+\mbox{\Hypertarget{list_8h_ac27afc3a5d012016ddba57a5de8f707f}\label{list_8h_ac27afc3a5d012016ddba57a5de8f707f}} 
+\index{list.\+h@{list.\+h}!L\+I\+N\+K\+E\+D\+\_\+\+L\+I\+S\+T\+\_\+\+I\+N\+IT@{L\+I\+N\+K\+E\+D\+\_\+\+L\+I\+S\+T\+\_\+\+I\+N\+IT}}
+\index{L\+I\+N\+K\+E\+D\+\_\+\+L\+I\+S\+T\+\_\+\+I\+N\+IT@{L\+I\+N\+K\+E\+D\+\_\+\+L\+I\+S\+T\+\_\+\+I\+N\+IT}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{L\+I\+N\+K\+E\+D\+\_\+\+L\+I\+S\+T\+\_\+\+I\+N\+IT}{LINKED\_LIST\_INIT}}
+{\footnotesize\ttfamily \#define L\+I\+N\+K\+E\+D\+\_\+\+L\+I\+S\+T\+\_\+\+I\+N\+IT}
+
+\mbox{\Hypertarget{list_8h_ad8ef74228d8ff4cc7599a90b39d4ad3b}\label{list_8h_ad8ef74228d8ff4cc7599a90b39d4ad3b}} 
+\index{list.\+h@{list.\+h}!L\+I\+S\+T\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT@{L\+I\+S\+T\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}}
+\index{L\+I\+S\+T\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT@{L\+I\+S\+T\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{L\+I\+S\+T\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}{LIST\_NODE\_INIT}}
+{\footnotesize\ttfamily \#define L\+I\+S\+T\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}
+
+\mbox{\Hypertarget{list_8h_af96e3e59d0fe57a307321d08499b0cfc}\label{list_8h_af96e3e59d0fe57a307321d08499b0cfc}} 
+\index{list.\+h@{list.\+h}!N\+O\+D\+E\+\_\+\+T\+Y\+PE@{N\+O\+D\+E\+\_\+\+T\+Y\+PE}}
+\index{N\+O\+D\+E\+\_\+\+T\+Y\+PE@{N\+O\+D\+E\+\_\+\+T\+Y\+PE}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{N\+O\+D\+E\+\_\+\+T\+Y\+PE}{NODE\_TYPE}}
+{\footnotesize\ttfamily \#define N\+O\+D\+E\+\_\+\+T\+Y\+PE}
+
+\mbox{\Hypertarget{list_8h_a61e116cd3ee951c0c57d22927b945c54}\label{list_8h_a61e116cd3ee951c0c57d22927b945c54}} 
+\index{list.\+h@{list.\+h}!T\+R\+E\+E\+\_\+\+L\+E\+A\+F\+\_\+\+I\+N\+IT@{T\+R\+E\+E\+\_\+\+L\+E\+A\+F\+\_\+\+I\+N\+IT}}
+\index{T\+R\+E\+E\+\_\+\+L\+E\+A\+F\+\_\+\+I\+N\+IT@{T\+R\+E\+E\+\_\+\+L\+E\+A\+F\+\_\+\+I\+N\+IT}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{T\+R\+E\+E\+\_\+\+L\+E\+A\+F\+\_\+\+I\+N\+IT}{TREE\_LEAF\_INIT}}
+{\footnotesize\ttfamily \#define T\+R\+E\+E\+\_\+\+L\+E\+A\+F\+\_\+\+I\+N\+IT}
+
+\mbox{\Hypertarget{list_8h_af594a3474c045c016402b5809e4f89ed}\label{list_8h_af594a3474c045c016402b5809e4f89ed}} 
+\index{list.\+h@{list.\+h}!T\+R\+E\+E\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT@{T\+R\+E\+E\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}}
+\index{T\+R\+E\+E\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT@{T\+R\+E\+E\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{T\+R\+E\+E\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}{TREE\_NODE\_INIT}}
+{\footnotesize\ttfamily \#define T\+R\+E\+E\+\_\+\+N\+O\+D\+E\+\_\+\+I\+N\+IT}
+
+
+
+\subsection{Typedef Documentation}
+\mbox{\Hypertarget{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}\label{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}} 
+\index{list.\+h@{list.\+h}!Iterator@{Iterator}}
+\index{Iterator@{Iterator}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{Iterator}{Iterator}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structiterator__s}{iterator\+\_\+s}} \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}}
+
+\mbox{\Hypertarget{list_8h_a275467ffca9c68b35d2692d45bd90122}\label{list_8h_a275467ffca9c68b35d2692d45bd90122}} 
+\index{list.\+h@{list.\+h}!Linked\+\_\+\+List@{Linked\+\_\+\+List}}
+\index{Linked\+\_\+\+List@{Linked\+\_\+\+List}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{Linked\+\_\+\+List}{Linked\_List}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structlinked__list__s}{linked\+\_\+list\+\_\+s}} \mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}}}
+
+\mbox{\Hypertarget{list_8h_a541ea301c0b5aedcd24808db52ba1036}\label{list_8h_a541ea301c0b5aedcd24808db52ba1036}} 
+\index{list.\+h@{list.\+h}!List\+\_\+\+Node@{List\+\_\+\+Node}}
+\index{List\+\_\+\+Node@{List\+\_\+\+Node}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{List\+\_\+\+Node}{List\_Node}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structlist__node__s}{list\+\_\+node\+\_\+s}} \mbox{\hyperlink{list_8h_a541ea301c0b5aedcd24808db52ba1036}{List\+\_\+\+Node}}}
+
+\mbox{\Hypertarget{list_8h_aee639bb67f1a0921cc205033a5f480a0}\label{list_8h_aee639bb67f1a0921cc205033a5f480a0}} 
+\index{list.\+h@{list.\+h}!node\+\_\+type@{node\+\_\+type}}
+\index{node\+\_\+type@{node\+\_\+type}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{node\+\_\+type}{node\_type}}
+{\footnotesize\ttfamily typedef enum \mbox{\hyperlink{list_8h_a6a276b85e2da28c5f9c3dbce61c55682}{node\+\_\+type}}  \mbox{\hyperlink{list_8h_a6a276b85e2da28c5f9c3dbce61c55682}{node\+\_\+type}}}
+
+\mbox{\Hypertarget{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}\label{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}} 
+\index{list.\+h@{list.\+h}!Tree\+\_\+\+Node@{Tree\+\_\+\+Node}}
+\index{Tree\+\_\+\+Node@{Tree\+\_\+\+Node}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{Tree\+\_\+\+Node}{Tree\_Node}}
+{\footnotesize\ttfamily typedef struct \mbox{\hyperlink{structtree__node__s}{tree\+\_\+node\+\_\+s}} \mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}}}
+
+
+
+\subsection{Enumeration Type Documentation}
+\mbox{\Hypertarget{list_8h_a6a276b85e2da28c5f9c3dbce61c55682}\label{list_8h_a6a276b85e2da28c5f9c3dbce61c55682}} 
+\index{list.\+h@{list.\+h}!node\+\_\+type@{node\+\_\+type}}
+\index{node\+\_\+type@{node\+\_\+type}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{node\+\_\+type}{node\_type}}
+{\footnotesize\ttfamily enum \mbox{\hyperlink{list_8h_a6a276b85e2da28c5f9c3dbce61c55682}{node\+\_\+type}}}
+
+\begin{DoxyEnumFields}{Enumerator}
+\raisebox{\heightof{T}}[0pt][0pt]{\index{I\+N\+T\+E\+R\+N\+AL@{I\+N\+T\+E\+R\+N\+AL}!list.\+h@{list.\+h}}\index{list.\+h@{list.\+h}!I\+N\+T\+E\+R\+N\+AL@{I\+N\+T\+E\+R\+N\+AL}}}\mbox{\Hypertarget{list_8h_a6a276b85e2da28c5f9c3dbce61c55682adc7588f17692aa631f375290d50a2c8e}\label{list_8h_a6a276b85e2da28c5f9c3dbce61c55682adc7588f17692aa631f375290d50a2c8e}} 
+I\+N\+T\+E\+R\+N\+AL&\\
+\hline
+
+\raisebox{\heightof{T}}[0pt][0pt]{\index{L\+E\+AF@{L\+E\+AF}!list.\+h@{list.\+h}}\index{list.\+h@{list.\+h}!L\+E\+AF@{L\+E\+AF}}}\mbox{\Hypertarget{list_8h_a6a276b85e2da28c5f9c3dbce61c55682a150d9833918207030adb030ccc759c20}\label{list_8h_a6a276b85e2da28c5f9c3dbce61c55682a150d9833918207030adb030ccc759c20}} 
+L\+E\+AF&\\
+\hline
+
+\end{DoxyEnumFields}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{list_8h_a8e524bbabcd1aa59231fc1590034d6dc}\label{list_8h_a8e524bbabcd1aa59231fc1590034d6dc}} 
+\index{list.\+h@{list.\+h}!get@{get}}
+\index{get@{get}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list,  }\item[{int}]{index }\end{DoxyParamCaption})}
+
+Function that gets the node at a given index and returns and iterator \mbox{\Hypertarget{list_8h_a64c721d2cad45f2baf10a76179280c32}\label{list_8h_a64c721d2cad45f2baf10a76179280c32}} 
+\index{list.\+h@{list.\+h}!init\+\_\+list@{init\+\_\+list}}
+\index{init\+\_\+list@{init\+\_\+list}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{init\+\_\+list()}{init\_list()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}}$\ast$ init\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialize a list \mbox{\Hypertarget{list_8h_a993df07562dd2a963b5d990d5e3f1acf}\label{list_8h_a993df07562dd2a963b5d990d5e3f1acf}} 
+\index{list.\+h@{list.\+h}!init\+\_\+list\+\_\+node@{init\+\_\+list\+\_\+node}}
+\index{init\+\_\+list\+\_\+node@{init\+\_\+list\+\_\+node}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{init\+\_\+list\+\_\+node()}{init\_list\_node()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_a541ea301c0b5aedcd24808db52ba1036}{List\+\_\+\+Node}}$\ast$ init\+\_\+list\+\_\+node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialize the list node \mbox{\Hypertarget{list_8h_ac2527342441e5d73c408522dab528d1c}\label{list_8h_ac2527342441e5d73c408522dab528d1c}} 
+\index{list.\+h@{list.\+h}!init\+\_\+tree\+\_\+leaf@{init\+\_\+tree\+\_\+leaf}}
+\index{init\+\_\+tree\+\_\+leaf@{init\+\_\+tree\+\_\+leaf}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{init\+\_\+tree\+\_\+leaf()}{init\_tree\_leaf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}}$\ast$ init\+\_\+tree\+\_\+leaf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initializes a tree leaf node \mbox{\Hypertarget{list_8h_aa74059990bd0beada7c520b77d36d084}\label{list_8h_aa74059990bd0beada7c520b77d36d084}} 
+\index{list.\+h@{list.\+h}!init\+\_\+tree\+\_\+node@{init\+\_\+tree\+\_\+node}}
+\index{init\+\_\+tree\+\_\+node@{init\+\_\+tree\+\_\+node}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{init\+\_\+tree\+\_\+node()}{init\_tree\_node()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}}$\ast$ init\+\_\+tree\+\_\+node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initializes an internal tree node \mbox{\Hypertarget{list_8h_aa7fd22cb851ff9c99d3eb7a801a2191f}\label{list_8h_aa7fd22cb851ff9c99d3eb7a801a2191f}} 
+\index{list.\+h@{list.\+h}!insert@{insert}}
+\index{insert@{insert}!list.\+h@{list.\+h}}
+\subsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list,  }\item[{int}]{index,  }\item[{char}]{value }\end{DoxyParamCaption})}
+
+Function that assigns the iterator to the given index 
