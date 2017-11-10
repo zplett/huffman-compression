@@ -42,6 +42,6 @@ Linked_List* init_list();
 
 #ifndef INSERT
 #define INSERT
-Iterator* insert( Linked_List list, int index );
+Iterator* insert( Linked_List *list, int index , char value );
 #endif
 
