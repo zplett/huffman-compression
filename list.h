@@ -40,6 +40,16 @@ List_Node* init_list_node();
 Linked_List* init_list();
 #endif
 
+#ifndef ITER_INIT
+#define ITER_INIT
+Iterator* init_iter( Linked_List* );
+#endif
+
+#ifndef FIND
+#define FIND
+Iterator* find( Linked_List*, char);
+#endif
+
 #ifndef INSERT
 #define INSERT
 Iterator* insert( Linked_List *list, int index , char value );
