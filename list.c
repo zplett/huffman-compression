@@ -175,6 +175,19 @@ Linked_List* init_list( )
   
 }
 
+/** Initializes the iterator of a list */
+Iterator* init_iter( Linked_List *list )
+{
+
+  // Make new iterator point to list head
+  Iterator *iter_ptr = malloc( sizeof( Iterator* ) );
+  Iterator iter = { 0, list -> head -> next };
+  iter_ptr = &iter;
+  // Return new iterator
+  return iter_ptr;
+  
+}
+
 /** Function that assigns the iterator to the given index */
 Iterator* insert( Linked_List *list, int index, char value )
 {
@@ -184,7 +197,7 @@ Iterator* insert( Linked_List *list, int index, char value )
   // The value of the tree node in the list node is set to parameter value
   node->value->value = value;
   // Grab iterator to the node we want to insert in front of
-  Iterator *target_iter = malloc( sizeof( Iterator* ) );
+  Iterator *target_iter = init_iter( list );
   // If list is empty
   if( list->head->next == list->tail )
     target_iter->node = list->tail; 
@@ -192,11 +205,17 @@ Iterator* insert( Linked_List *list, int index, char value )
   else  
     target_iter = get( list, index );
   // Link the new node in place
-  List_Node *temp = target_iter->node->prev;
-  target_iter->node->prev = node;
-  node->next = target_iter->node;
-  node->prev = temp;
-  temp->next = node;
+  if( target_iter -> node != NULL )
+    {
+    if( target_iter -> node -> prev != NULL )
+      {
+        List_Node *temp = target_iter->node->prev;
+        node->prev = temp;
+        temp->next = node;
+      }
+    target_iter->node->prev = node;
+    node->next = target_iter->node;
+    }
   // Reassign the iterator to the new node
   target_iter->node = node;
   target_iter->index = index;
@@ -205,6 +224,35 @@ Iterator* insert( Linked_List *list, int index, char value )
   
 }
 
+/** Find the given value in the list or return a NULL iterator */
+Iterator* find( Linked_List *list, char value )
+{
+
+  // Initialize new iterator to the head of the list
+  Iterator *iter = init_iter( list );
+  // Iterate through list until character value is found
+  while( iter -> node -> next != NULL )
+    {
+      // If the values are the same, the iterator should be returned
+      if( iter -> node -> value -> value == value )
+        return iter;
+      printf( "%d\n", iter -> node -> value -> value );
+      // Update the iterator 
+      ++iter -> index;
+      iter -> node = iter -> node -> next;
+    }
+  // If the while loop finished without finding the value, return NULL
+  return NULL;
+  
+}
+
+/** Insertion sort 
+Iterator* insertion_sort( Linked_List *list )
+{
+
+}
+*/
+
 /** Main function */
 int main()
 {
@@ -212,7 +260,12 @@ int main()
   Linked_List *list = init_list();
   for( int i = 0; i < 10; ++i )
     insert( list, 0, i );
+
+  Iterator *found = find( list, '3' - '0' );
   Iterator *iter = get( list, 3 );
-  printf( "%d, %d\n", iter -> node -> value -> value, iter -> index );
-  
+  printf( "Get: %d, %d\n", iter -> node -> value -> value, iter -> index );
+  if( found == NULL )
+    printf("Not found\n");
+  else 
+  printf( "Found: %d, %d\n", found -> node -> value -> value, found -> index );
 }
