@@ -73,16 +73,18 @@ Iterator* get( Linked_List *list, int index )
       return NULL;
     }
   // Iterator pointing to the head of the list
-  Iterator iter = { 0, list -> head -> next }, *iter_ptr = malloc( sizeof( Iterator ) );
-  iter_ptr = &iter;
+  Iterator *iter = init_iter( list );
 
+  if( iter -> node == NULL )
+    printf("WHATTTTTTTTTTT\n");
+  
   // If index is out of range, iterator to tail is returned
-  while( iter.node -> next != NULL )
+  while( iter -> node -> next != NULL )
     {
-      if( iter.index == index )
-        return iter_ptr;
-      ++iter.index;
-      iter.node = iter.node -> next;
+      if( iter -> index == index )
+        return iter;
+      ( iter -> index ) += 1;
+      iter -> node = iter -> node -> next;
     }
 
   // If the while loop finished then it hit tail ( if index is 0 and the list is empty, it will always return tail )
@@ -90,7 +92,7 @@ Iterator* get( Linked_List *list, int index )
     fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
   else if( index != 0 )
     fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
-  return iter_ptr;
+  return iter;
   
 }
 
@@ -179,10 +181,16 @@ Linked_List* init_list( )
 Iterator* init_iter( Linked_List *list )
 {
 
+  if( list -> head == NULL )
+    return NULL;
+
   // Make new iterator point to list head
   Iterator *iter_ptr = malloc( sizeof( Iterator* ) );
-  Iterator iter = { 0, list -> head -> next };
-  iter_ptr = &iter;
+  if( iter_ptr != NULL )
+    {
+      iter_ptr -> index = 0;
+      iter_ptr -> node = list -> head -> next;
+    }
   // Return new iterator
   return iter_ptr;
   
@@ -236,7 +244,6 @@ Iterator* find( Linked_List *list, char value )
       // If the values are the same, the iterator should be returned
       if( iter -> node -> value -> value == value )
         return iter;
-      printf( "%d\n", iter -> node -> value -> value );
       // Update the iterator 
       ++iter -> index;
       iter -> node = iter -> node -> next;
