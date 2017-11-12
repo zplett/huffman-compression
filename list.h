@@ -29,11 +29,6 @@ Tree_Node* init_tree_leaf();
 Tree_Node* init_tree_node();
 #endif
 
-#ifndef LIST_NODE_INIT
-#define LIST_NODE_INIT
-Tree_Node* init_list_node();
-#endif
-
 #ifndef LINKED_LIST_INIT
 #define LINKED_LIST_INIT
 Linked_List* init_list();

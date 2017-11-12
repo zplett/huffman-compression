@@ -17,8 +17,6 @@ struct tree_node_s
   node_type type;
   // Value of the node
   char value;
-  // Frequency of the node
-  int frequency;
   // Left and right children
   struct tree_node_s *left;
   struct tree_node_s *right;
@@ -66,9 +64,6 @@ Iterator* get( Linked_List *list, int index )
   // Iterator pointing to the head of the list
   Iterator *iter = init_iter( list );
 
-  if( iter -> node == NULL )
-    printf("WHATTTTTTTTTTT\n");
-  
   // If index is out of range, iterator to tail is returned
   while( iter -> node -> next != NULL )
     {
@@ -98,7 +93,6 @@ Tree_Node* init_tree_leaf()
     {
       tree_node -> type = LEAF;
       tree_node -> value = -2;
-      tree_node -> frequency = 0;
       tree_node -> left = NULL;
       tree_node -> right = NULL;
       tree_node -> prev = NULL;
@@ -120,7 +114,6 @@ Tree_Node* init_tree_node()
     {
       tree_node -> type = INTERNAL;
       tree_node -> value = -2;
-      tree_node -> frequency = 0;
       tree_node -> left = NULL;
       tree_node -> right = NULL;
       tree_node -> prev = NULL;
