@@ -256,30 +256,46 @@ Iterator* remove_node( Iterator *iter )
 /** Insertion sort */  
 Iterator* insertion_sort( Linked_List *list )
 {
-
+  
   Iterator *iter = init_iter( list );
-  iter->node = iter->node->next;
-  while( iter->node->next != NULL )
+  int max_index = 0;
+  while( iter->node != list->tail )
     {
-      char temp_val = iter->node->value;
-      Iterator *inner = init_iter( list );
-      inner->node = iter->node->prev;
-      while( (inner->node != NULL) && (temp_val < inner->node->value) ) 
-	{
-	  int inner_index = inner->index;
-	  char inner_val = inner->node->value;
-	  inner->node = inner->node->next;
-	  int next_inner_index = inner->index;
-	  char next_inner_val = inner->node->value;
-	  insert( list, inner_index, next_inner_val );                                              
-	  insert( list, next_inner_index, inner_val );
-	  remove_node( inner );
-	  inner->node = inner->node->prev;
-	  remove_node( inner );
-	}
-      inner->node = inner->node->prev;
+      ++max_index;
       iter->node = iter->node->next;
     }
+  while( iter->node != list->head )
+    iter->node = iter->node->prev;
+  for( int i = 1; i < max_index; ++i )
+    {
+      Tree_Node *insert_node = ( get( list, i ) )->node;
+      int hole = i;
+      while( hole > 0 )
+	{
+	  int prev_freq = ascii_list[ hole - 1];
+	  int insert_freq = ascii_list[ ( find( list, insert_node->value)->index ) ];
+	  if( prev_freq <= insert_freq )
+	    break;
+	  Tree_Node *hole_node = get( list, hole )->node;
+	  Tree_Node *prev_hole_node = get( list, --hole )->node;
+	  iter = find( list, hole_node->value );
+	  Iterator *prev_iter = find( list, prev_hole_node->value );
+	  iter->node = prev_hole_node;
+	  ascii_list[ iter->index ] = ascii_list[ prev_iter->index ];
+	  iter->node->next = prev_hole_node->next;
+	  iter->node->prev = prev_hole_node->prev;
+	}
+      if( hole != i )
+	{
+	  Tree_Node *hole_node = get( list, hole )->node;
+	  iter = find( list, hole_node->value );
+	  iter->node = hole_node;
+	  iter->node->next = hole_node->next;
+	  iter->node->prev = hole_node->prev;
+	}
+    }
+  while( iter->node->prev != list->head )
+    iter->node = iter->node->prev;
   return iter;
   
 } 
@@ -289,34 +305,21 @@ int main()
 {
 
   Linked_List *list = init_list();
-  insert( list, 0, '4' );
-  insert( list, 0, '8' );
-  insert( list, 0, '2' );
   insert( list, 0, '1' );
   insert( list, 0, '3' );
-  insert( list, 0, '9' );
-  insert( list, 0, '5' );
-  insert( list, 0, '6' );
-  insert( list, 0, '7' );
-  insert( list, 0, '0' );
-  insertion_sort( list );
-  Iterator *iter = init_iter( list );
-  for( int i = 0; i < 10; ++i )
+  insert( list, 0, '4' );
+  insert( list, 0, '2' );
+  ascii_list[0] = 3;
+  ascii_list[1] = 1;
+  ascii_list[2] = 2;
+  ascii_list[3] = 4;
+  Iterator *iter = insertion_sort( list );
+  for( int i = 0; i < 3; ++i )
     {
-      printf( "%c\n", iter->node->value );
-      iter->node = iter->node->next;
+    printf( "%c\n", iter->node->value );
+    iter->node = iter->node->next;
     }
-  iter->node = iter->node->prev->prev;
-  remove_node( iter );
-  Iterator *new_iter = init_iter( list );
-  printf( "\n" );
-  for( int i = 0; i < 9; ++i )
-    {
-      printf( "%c\n", new_iter->node->value );
-      new_iter->node = new_iter->node->next;
-    }
-
-  /* 
+  /*
   for( int i = 0; i < 10; ++i )
     insert( list, 0, i );
 
