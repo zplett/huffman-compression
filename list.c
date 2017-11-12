@@ -253,14 +253,36 @@ Iterator* remove_node( Iterator *iter )
   
 }
 
-/** Insertion sort  
+/** Insertion sort */  
 Iterator* insertion_sort( Linked_List *list )
 {
 
+  Iterator *iter = init_iter( list );
+  iter->node = iter->node->next;
+  while( iter->node->next != NULL )
+    {
+      char temp_val = iter->node->value;
+      Iterator *inner = init_iter( list );
+      inner->node = iter->node->prev;
+      while( (inner->node != NULL) && (temp_val < inner->node->value) ) 
+	{
+	  int inner_index = inner->index;
+	  char inner_val = inner->node->value;
+	  inner->node = inner->node->next;
+	  int next_inner_index = inner->index;
+	  char next_inner_val = inner->node->value;
+	  insert( list, inner_index, next_inner_val );                                              
+	  insert( list, next_inner_index, inner_val );
+	  remove_node( inner );
+	  inner->node = inner->node->prev;
+	  remove_node( inner );
+	}
+      inner->node = inner->node->prev;
+      iter->node = iter->node->next;
+    }
+  return iter;
   
-  
-} */ 
-
+} 
 
 /** Main function */
 int main()
@@ -277,6 +299,7 @@ int main()
   insert( list, 0, '6' );
   insert( list, 0, '7' );
   insert( list, 0, '0' );
+  insertion_sort( list );
   Iterator *iter = init_iter( list );
   for( int i = 0; i < 10; ++i )
     {
