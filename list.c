@@ -9,6 +9,8 @@
 #include <stdlib.h>
 #include "list.h"
 
+int ascii_list[ 256 ] = { 0 };
+
 /** Struct for each node of the tree */
 struct tree_node_s
 {
@@ -75,9 +77,15 @@ Iterator* get( Linked_List *list, int index )
 
   // If the while loop finished then it hit tail ( if index is 0 and the list is empty, it will always return tail )
   if( index == 0 )
-    fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
+    {
+      fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
+      return NULL;
+    }
   else if( index != 0 )
-    fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
+    {
+      fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
+      return NULL;
+    }
   return iter;
   
 }
@@ -141,7 +149,6 @@ Linked_List* init_list( )
     list -> head -> next = list -> tail;
   if( list -> tail != NULL )
     list -> tail -> prev = list -> head;
-
   return list;
   
 }
@@ -222,18 +229,71 @@ Iterator* find( Linked_List *list, char value )
   
 }
 
-/** Insertion sort 
+/** Remove a node from the linked list */
+Iterator* remove_node( Iterator *iter )
+{
+
+  // Handles empty lists or lists without the input index 
+  if( iter == NULL )
+    {
+      fprintf( stderr, "Invalid input, iterator not found." );
+      return NULL;
+    }
+  // Provided list and value fields are valid
+  else
+    {
+      // Sets node's previous and next fields to point to each other
+      iter->node->prev->next = iter->node->next;
+      iter->node->next->prev = iter->node->prev;
+      free( iter->node );
+      iter->node = iter->node->next;
+    }
+  // If the remove was succesful, the iterator is returned
+  return iter;
+  
+}
+
+/** Insertion sort  
 Iterator* insertion_sort( Linked_List *list )
 {
 
-}
-*/
+  
+  
+} */ 
+
 
 /** Main function */
 int main()
 {
 
   Linked_List *list = init_list();
+  insert( list, 0, '4' );
+  insert( list, 0, '8' );
+  insert( list, 0, '2' );
+  insert( list, 0, '1' );
+  insert( list, 0, '3' );
+  insert( list, 0, '9' );
+  insert( list, 0, '5' );
+  insert( list, 0, '6' );
+  insert( list, 0, '7' );
+  insert( list, 0, '0' );
+  Iterator *iter = init_iter( list );
+  for( int i = 0; i < 10; ++i )
+    {
+      printf( "%c\n", iter->node->value );
+      iter->node = iter->node->next;
+    }
+  iter->node = iter->node->prev->prev;
+  remove_node( iter );
+  Iterator *new_iter = init_iter( list );
+  printf( "\n" );
+  for( int i = 0; i < 9; ++i )
+    {
+      printf( "%c\n", new_iter->node->value );
+      new_iter->node = new_iter->node->next;
+    }
+
+  /* 
   for( int i = 0; i < 10; ++i )
     insert( list, 0, i );
 
@@ -243,5 +303,6 @@ int main()
   if( found == NULL )
     printf("Not found\n");
   else 
-  printf( "Found: %d, %d\n", found -> node -> value, found -> index );
+  printf( "Found: %d, %d\n", found -> node -> value, found -> index ); */
+
 }
