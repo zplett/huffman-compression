@@ -4,7 +4,6 @@
 
 #ifndef TYPEDEF_LISTS
 #define TYPEDEF_LISTS
-typedef struct list_node_s List_Node;
 typedef struct tree_node_s Tree_Node;
 typedef struct iterator_s Iterator;
 typedef struct linked_list_s Linked_List;
@@ -32,7 +31,7 @@ Tree_Node* init_tree_node();
 
 #ifndef LIST_NODE_INIT
 #define LIST_NODE_INIT
-List_Node* init_list_node();
+Tree_Node* init_list_node();
 #endif
 
 #ifndef LINKED_LIST_INIT

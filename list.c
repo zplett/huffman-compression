@@ -22,19 +22,10 @@ struct tree_node_s
   // Left and right children
   struct tree_node_s *left;
   struct tree_node_s *right;
-
-};
-
-/** Struct for each node of the linked list */  
-struct list_node_s
-{
-
-  // Tree node with the value
-  Tree_Node *value;
-  // This node's previous and next node fields
-  struct list_node_s *prev;
-  struct list_node_s *next;
-
+  // Previous and next node fields
+  struct tree_node_s *prev;
+  struct tree_node_s *next;
+  
 };
 
 /** Struct for the linked list */
@@ -42,7 +33,7 @@ struct linked_list_s
 {
 
   // Sentinel nodes
-  List_Node *head, *tail;
+  Tree_Node *head, *tail;
   
 };
 
@@ -53,7 +44,7 @@ struct iterator_s
   // Index of the node pointed to
   int index;
   // Node pointed to
-  List_Node *node;
+  Tree_Node *node;
   
 };
 
@@ -109,7 +100,9 @@ Tree_Node* init_tree_leaf()
       tree_node -> value = -2;
       tree_node -> frequency = 0;
       tree_node -> left = NULL;
-      tree_node -> right = NULL; 
+      tree_node -> right = NULL;
+      tree_node -> prev = NULL;
+      tree_node -> next = NULL;
     }
 
   return tree_node;
@@ -130,29 +123,12 @@ Tree_Node* init_tree_node()
       tree_node -> frequency = 0;
       tree_node -> left = NULL;
       tree_node -> right = NULL;
+      tree_node -> prev = NULL;
+      tree_node -> next = NULL;
     }
-
+ 
   return tree_node;
 
-}
-
-/** Initialize the list node */
-List_Node* init_list_node()
-{
-
-  // Allocates memory for the list node
-  List_Node *node = malloc( sizeof( List_Node ) );
-  // Initializes the node's value and defines the node's next
-  // and previous fields as null
-  if( node != NULL )
-    {
-      node -> value = init_tree_node();
-      node -> next = NULL;
-      node -> prev = NULL;
-    }
-
-  return node;
-  
 }
 
 /** Initialize a list */
@@ -164,8 +140,8 @@ Linked_List* init_list( )
   // Initializes the sentinel nodes
   if( list != NULL )
     {
-      list -> head = init_list_node();
-      list -> tail = init_list_node();
+      list -> head = init_tree_leaf();
+      list -> tail = init_tree_leaf();
     }
   // Links sentinel nodes together
   if( list -> head != NULL )
@@ -201,9 +177,9 @@ Iterator* insert( Linked_List *list, int index, char value )
 {
 
   // Make a new node
-  List_Node *node = init_list_node();
+  Tree_Node *node = init_tree_leaf();
   // The value of the tree node in the list node is set to parameter value
-  node->value->value = value;
+  node->value = value;
   // Grab iterator to the node we want to insert in front of
   Iterator *target_iter = init_iter( list );
   // If list is empty
@@ -217,7 +193,7 @@ Iterator* insert( Linked_List *list, int index, char value )
     {
     if( target_iter -> node -> prev != NULL )
       {
-        List_Node *temp = target_iter->node->prev;
+        Tree_Node *temp = target_iter->node->prev;
         node->prev = temp;
         temp->next = node;
       }
@@ -242,7 +218,7 @@ Iterator* find( Linked_List *list, char value )
   while( iter -> node -> next != NULL )
     {
       // If the values are the same, the iterator should be returned
-      if( iter -> node -> value -> value == value )
+      if( iter -> node -> value == value )
         return iter;
       // Update the iterator 
       ++iter -> index;
@@ -270,9 +246,9 @@ int main()
 
   Iterator *found = find( list, '3' - '0' );
   Iterator *iter = get( list, 3 );
-  printf( "Get: %d, %d\n", iter -> node -> value -> value, iter -> index );
+  printf( "Get: %d, %d\n", iter -> node -> value, iter -> index );
   if( found == NULL )
     printf("Not found\n");
   else 
-  printf( "Found: %d, %d\n", found -> node -> value -> value, found -> index );
+  printf( "Found: %d, %d\n", found -> node -> value, found -> index );
 }
