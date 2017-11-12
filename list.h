@@ -49,3 +49,7 @@ Iterator* find( Linked_List*, char);
 Iterator* insert( Linked_List *list, int index , char value );
 #endif
 
+#ifndef REMOVE
+#define REMOVE
+Iterator* remove_node( Iterator *iter );
+#endif 
