@@ -182,13 +182,6 @@ Iterator* insert( Linked_List *list, int index, char value )
   node->value = value;
   // Grab iterator to the node we want to insert in front of
   Iterator *target_iter = init_iter( list );
-  // If this item has already been inserted into the list we incrememnet its count
-  // and return the iterator pointing to the node with the entered value
-  if( ascii_list[ value - '0' ] > 0 )
-    {
-      ++ascii_list[ value - '0' ];
-      return target_iter;
-    } 
   // If list is empty
   if( list->head->next == list->tail )
     target_iter->node = list->tail; 
@@ -273,7 +266,7 @@ Iterator* insertion_sort( Linked_List *list )
   while( iter->node != list->tail )
     {
       Iterator *inner = find( list, iter->node->value );
-      while( (inner->node->prev != list->head) && (ascii_list[inner->node->prev->value - '0'] > ascii_list[inner->node->value - '0']) )
+      while( (inner->node->prev != list->head) && (ascii_list[inner->node->prev->value] > ascii_list[inner->node->value]) )
 	{
 	  Iterator *iter1 = find( list, inner->node->value );
 	  Iterator *iter2 = find( list, inner->node->prev->value );
@@ -293,20 +286,54 @@ void swap( Iterator *iter1, Iterator *iter2 )
 {
 
   // Stores temporary next and prev fields from iter1
-  Tree_Node *t_next = iter1->node->next;
-  Tree_Node *t_prev = iter1->node->prev;
+
+  Tree_Node *t_next = iter1 -> node -> next;
+  Tree_Node *t_prev = iter1 -> node -> prev;
   // Sets the nodes surrounding iter2 to point to iter1
-  iter2->node->prev->next = iter1->node;
-  iter2->node->next->prev = iter1->node;
-  iter1->node->next = iter2->node->next;
-  iter1->node->prev = iter2->node->prev;
-  // Sets the nodes surrounding the original copy of iter1
-  // to point to iter2
-  iter2->node->next = t_next;
-  iter2->node->prev = t_prev;
-  t_next->prev = iter2->node;
-  t_prev->next = iter2->node;
-  
+  if( iter2 -> node -> prev == iter1 -> node )
+    {
+
+      // Works when iter1 is before iter2
+      iter1 -> node -> next = iter2 -> node -> next;
+      iter1 -> node -> prev = iter2 -> node;
+      iter2 -> node -> next -> prev = iter1 -> node;
+      iter1 -> node -> next = iter2 -> node -> next;
+      iter2 -> node -> next = iter1 -> node;
+      iter2 -> node -> prev = t_prev;
+      t_prev -> next = iter2 -> node;
+      iter2 -> node -> next = iter1 -> node;
+      
+    }
+  else if( iter2 -> node -> next == iter1 -> node )
+    {
+
+      // Iter 2 is earlier in the chain than iter 1 here
+      iter1 -> node -> next = iter2 -> node;
+      iter1 -> node -> prev = iter2 -> node -> prev;
+      iter2 -> node -> prev -> next = iter1 -> node;
+      iter2 -> node -> prev = iter1 -> node;
+      iter2 -> node -> next = t_next;
+      t_next -> prev = iter2 -> node;
+      
+    }
+  // General functionality for when iterators are not adjacent
+  else
+    {
+
+      // Link the first node in place 
+      iter2 -> node -> prev -> next = iter1 -> node;
+      iter1 -> node -> prev = iter2 -> node -> prev;
+      iter2 -> node -> next -> prev = iter1 -> node;
+      iter1 -> node -> next = iter2 -> node -> next;
+      
+      // Sets the nodes surrounding the original copy of iter1 to point to iter2
+      iter2 -> node -> next = t_next;
+      iter2 -> node->prev = t_prev;
+      t_next -> prev = iter2 -> node;
+      t_prev -> next = iter2 -> node;
+ 
+    }
+
 }
 
 /** Prints the elements of a list */
@@ -343,8 +370,15 @@ int main()
   insert( list, 0, '2' );
   insert( list, 0, '3' );
   insert( list, 0, '2' );
+  ascii_list['4'] = 4;
+  ascii_list['3'] = 3;
+  ascii_list['2'] = 2;
+  ascii_list['1'] = 1;
   print_list( list );
-  insertion_sort( list );
+  Iterator *iter1 = get( list, 2 );
+  Iterator *iter2 = get( list, 3 );
+  swap( iter2, iter1 );
+  //insertion_sort( list );
   print_list( list );
 
 }
