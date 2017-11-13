@@ -266,7 +266,7 @@ Iterator* insertion_sort( Linked_List *list )
   while( iter->node != list->tail )
     {
       Iterator *inner = find( list, iter->node->value );
-      while( (inner->node->prev != list->head) && (ascii_list[inner->node->prev->value] > ascii_list[inner->node->value]) )
+      while( (inner->node->prev != list->head) && (ascii_list[(int)inner->node->prev->value] > ascii_list[(int)inner->node->value]) )
 	{
 	  Iterator *iter1 = find( list, inner->node->value );
 	  Iterator *iter2 = find( list, inner->node->prev->value );
