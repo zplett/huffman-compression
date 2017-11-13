@@ -286,6 +286,7 @@ void swap( Iterator *iter1, Iterator *iter2 )
 {
 
   // Stores temporary next and prev fields from iter1
+
   Tree_Node *t_next = iter1 -> node -> next;
   Tree_Node *t_prev = iter1 -> node -> prev;
   // Sets the nodes surrounding iter2 to point to iter1
@@ -332,7 +333,7 @@ void swap( Iterator *iter1, Iterator *iter2 )
       t_prev -> next = iter2 -> node;
  
     }
-  
+
 }
 
 /** Prints the elements of a list */
@@ -369,7 +370,6 @@ int main()
   insert( list, 0, '2' );
   insert( list, 0, '3' );
   insert( list, 0, '2' );
-
   ascii_list['4'] = 4;
   ascii_list['3'] = 3;
   ascii_list['2'] = 2;
