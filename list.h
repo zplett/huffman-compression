@@ -53,3 +53,13 @@ Iterator* insert( Linked_List *list, int index , char value );
 #define REMOVE
 Iterator* remove_node( Iterator *iter );
 #endif 
+
+#ifndef SWAP
+#define SWAP
+void swap( Iterator *iter1, Iterator *iter2 );
+#endif
+
+#ifndef PRINT_LIST
+#define PRINT_LIST
+void print_list( Linked_List *list );
+#endif
