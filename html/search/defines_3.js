@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['node_5ftype',['NODE_TYPE',['../list_8h.html#af96e3e59d0fe57a307321d08499b0cfc',1,'list.h']]]
+  ['linked_5flist_5finit',['LINKED_LIST_INIT',['../list_8h.html#ac27afc3a5d012016ddba57a5de8f707f',1,'list.h']]]
 ];

@@ -276,11 +276,26 @@ Iterator* remove_node( Iterator *iter )
       // Points the iterator to the next node
       iter->node = iter->node->next;
     }
-  // The value of the node to be removed
-  char value = iter->node->value;
-  // Resets the frequency of this value
-  ascii_list[ (int) value ] = 0;
   // If the remove was succesful, the iterator is returned
+  return iter;
+  
+}
+
+/** Insert a premade node */
+Iterator* insert_ready_node( Linked_List *list, int index, Iterator *iter )
+{
+  
+  // Get the surrounding nodes
+  Iterator *target = get( list, index );
+  Tree_Node *target_prev = target -> node -> prev;
+  // Link in the list
+  iter -> node -> next = target -> node;
+  iter -> node -> prev = target_prev;
+  target_prev -> next = iter -> node;
+  target -> node -> prev = iter -> node;
+  iter -> index = target -> index;
+  target -> index += 1;
+  // Return iterator to node
   return iter;
   
 }
@@ -332,51 +347,57 @@ Iterator* insertion_sort( Linked_List *list )
   
 } 
 
-/** Swaps two elements in a list */
+/** Swaps the value and the children */
 void swap( Iterator *iter1, Iterator *iter2 )
 {
 
-  // Stores temporary next and prev fields from iter1
-  Tree_Node *t_next = iter1->node->next;
-  Tree_Node *t_prev = iter1->node->prev;
-  // Sets the nodes surrounding iter2 to point to iter1
-  if( iter2->node->prev == iter1->node )
-    {
-      // Works when iter1 is before iter2
-      iter1->node->next = iter2->node->next;
-      iter1->node->prev = iter2->node;
-      iter2->node->next->prev = iter1->node;
-      iter1->node->next = iter2->node->next;
-      iter2->node->next = iter1->node;
-      iter2->node->prev = t_prev;
-      t_prev->next = iter2->node;
-      iter2->node->next = iter1->node; 
-    }
-  else if( iter2->node->next == iter1->node )
-    {
-      // Iter 2 is earlier in the chain than iter 1 here
-      iter1->node->next = iter2->node;
-      iter1->node->prev = iter2->node->prev;
-      iter2->node->prev->next = iter1->node;
-      iter2->node->prev = iter1->node;
-      iter2->node->next = t_next;
-      t_next->prev = iter2->node; 
-    }
-  // General functionality for when iterators are not adjacent
-  else
-    {
-      // Link the first node in place 
-      iter2->node->prev->next = iter1->node;
-      iter1->node->prev = iter2-> node->prev;
-      iter2->node->next->prev = iter1->node;
-      iter1->node->next = iter2->node->next;
-      // Sets the nodes surrounding the original copy of iter1 to point to iter2
-      iter2->node->next = t_next;
-      iter2->node->prev = t_prev;
-      t_next->prev = iter2->node;
-      t_prev->next = iter2->node;
-    }
+  // Make a temporary copy of iter1
+  Tree_Node *temp = init_tree_leaf();
+  temp -> value = iter1 -> node -> value;
+  temp -> left = iter1 -> node -> left;
+  temp -> right = iter1 -> node -> right;
+  // Store the index of iter1
+  int temporary_index = iter1 -> index;
+  // Put iter2 values into iter1
+  iter1 -> node -> value = iter2 -> node -> value;
+  iter1 -> node -> left = iter2 -> node -> left;
+  iter1 -> node -> right = iter2 -> node -> right;
+  iter1 -> index = iter2 -> index;
+  // Put temp (iter1) values into iter2
+  iter2 -> node -> value = temp -> value;
+  iter2 -> node -> left = temp -> left;
+  iter2 -> node -> right = temp -> right;
+  iter2 -> index = temporary_index;
+  // Free our temporary copy
+  free( temp );
+  // Swap the iterators
+  temp = iter1 -> node;
+  iter1 -> node = iter2 -> node;
+  iter2 -> node = temp;
 
+}
+
+/** Fuses two nodes to make a tree */
+void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
+{
+  
+  // Store the integer ascii value of each node for indexing the frequency array
+  int ascii_index1 = (int)iter1 -> node -> value;
+  int ascii_index2 = (int)iter2 -> node -> value;
+  // Create a root internal node with value being the sum of the frequencies of both parameter nodes
+  Tree_Node *root = init_tree_node();
+  Iterator *iter_root = malloc( sizeof( Iterator ) );
+  iter_root -> index = 0;
+  iter_root -> node = root;
+  root -> value = ascii_list[ ascii_index1 ] + ascii_list[ ascii_index2 ];
+  // Make the children be the two parameter nodes
+  root -> left = iter1 -> node;
+  root -> right = iter2 -> node;
+  remove_node( iter1 );
+  remove_node( iter2 );
+  insert_ready_node( list, 0, iter_root );
+  free( iter_root );
+  
 }
 
 /** Prints the elements of a list */
@@ -397,7 +418,7 @@ void print_list( Linked_List *list )
   // the current nodes value
   while( iter->node != list->tail )
     {
-      printf( "%c ", iter->node->value );
+      printf( "%d ", iter->node->value );
       if( iter->node->next == list->tail )
 	break;
       iter->node = iter->node->next;
@@ -443,10 +464,12 @@ int main()
   insert( list, 0, 'r' );
   insert( list, 0, 'r' );
   insert( list, 0, 'a' );
-  
   print_list( list );
   printf("\n");
   insertion_sort( list );
+  Iterator *iter1 = get( list, 0 );
+  Iterator *iter2 = get( list, 1 );
+  fuse( list, iter1, iter2 );
   print_list( list );
 
 }
