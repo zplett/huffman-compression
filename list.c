@@ -53,12 +53,12 @@ Iterator* get( Linked_List *list, int index )
 {
 
   // Handle only valid lists
-  if( list->head == NULL )
+  if( list -> head == NULL )
     {
       fprintf( stderr, "Can't create iterator for incomplete list. Missing head node.");
       return NULL;
     }
-  if( list->tail == NULL )
+  if( list -> tail == NULL )
     {
       fprintf( stderr, "Can't create iterator for incomplete list. Missing tail node.");
       return NULL;
@@ -67,12 +67,12 @@ Iterator* get( Linked_List *list, int index )
   Iterator *iter = init_iter( list );
 
   // If index is out of range, iterator to tail is returned
-  while( iter->node->next != NULL )
+  while( iter -> node -> next != NULL )
     {
-      if( iter->index == index )
+      if( iter -> index == index )
         return iter;
-      ( iter->index ) += 1;
-      iter->node = iter->node->next;
+      ( iter -> index ) += 1;
+      iter -> node = iter -> node -> next;
     }
 
   // If the while loop finished then it hit tail ( if index is 0 and the list is empty, it will always return tail )
@@ -99,12 +99,12 @@ Tree_Node* init_tree_leaf()
   // Initializes the value fields of a tree node
   if( tree_node != NULL )
     {
-      tree_node->type = LEAF;
-      tree_node->value = -2;
-      tree_node->left = NULL;
-      tree_node->right = NULL;
-      tree_node->prev = NULL;
-      tree_node->next = NULL;
+      tree_node -> type = LEAF;
+      tree_node -> value = -2;
+      tree_node -> left = NULL;
+      tree_node -> right = NULL;
+      tree_node -> prev = NULL;
+      tree_node -> next = NULL;
     }
 
   return tree_node;
@@ -120,12 +120,12 @@ Tree_Node* init_tree_node()
   // Initializes the value fields of a tree node
   if( tree_node != NULL )
     {
-      tree_node->type = INTERNAL;
-      tree_node->value = -2;
-      tree_node->left = NULL;
-      tree_node->right = NULL;
-      tree_node->prev = NULL;
-      tree_node->next = NULL;
+      tree_node -> type = INTERNAL;
+      tree_node -> value = -2;
+      tree_node -> left = NULL;
+      tree_node -> right = NULL;
+      tree_node -> prev = NULL;
+      tree_node -> next = NULL;
     }
  
   return tree_node;
@@ -141,14 +141,14 @@ Linked_List* init_list( )
   // Initializes the sentinel nodes
   if( list != NULL )
     {
-      list->head = init_tree_leaf();
-      list->tail = init_tree_leaf();
+      list -> head = init_tree_leaf();
+      list -> tail = init_tree_leaf();
     }
   // Links sentinel nodes together
-  if( list->head != NULL )
-    list->head->next = list->tail;
-  if( list->tail != NULL )
-    list->tail->prev = list->head;
+  if( list -> head != NULL )
+    list -> head -> next = list -> tail;
+  if( list -> tail != NULL )
+    list -> tail -> prev = list -> head;
   return list;
   
 }
@@ -157,15 +157,15 @@ Linked_List* init_list( )
 Iterator* init_iter( Linked_List *list )
 {
 
-  if( list->head == NULL )
+  if( list -> head == NULL )
     return NULL;
 
   // Make new iterator point to list head
   Iterator *iter_ptr = malloc( sizeof( Iterator* ) );
   if( iter_ptr != NULL )
     {
-      iter_ptr->index = 0;
-      iter_ptr->node = list->head->next;
+      iter_ptr -> index = 0;
+      iter_ptr -> node = list -> head -> next;
     }
   // Return new iterator
   return iter_ptr;
@@ -202,30 +202,30 @@ Iterator* insert( Linked_List *list, int index, char value )
   // Make a new node
   Tree_Node *node = init_tree_leaf();
   // The value of the tree node in the list node is set to parameter value
-  node->value = value;
+  node -> value = value;
   // Grab iterator to the node we want to insert in front of
   Iterator *target_iter = init_iter( list );
   // If list is empty
-  if( list->head->next == list->tail )
-    target_iter->node = list->tail; 
+  if( list -> head -> next == list -> tail )
+    target_iter -> node = list -> tail; 
   // If list is not empty
   else  
     target_iter = get( list, index );
   // Link the new node in place
-  if( target_iter->node != NULL )
+  if( target_iter -> node != NULL )
     {
-    if( target_iter->node->prev != NULL )
+    if( target_iter -> node -> prev != NULL )
       {
-        Tree_Node *temp = target_iter->node->prev;
-        node->prev = temp;
-        temp->next = node;
+        Tree_Node *temp = target_iter -> node -> prev;
+        node -> prev = temp;
+        temp -> next = node;
       }
-    target_iter->node->prev = node;
-    node->next = target_iter->node;
+    target_iter -> node -> prev = node;
+    node -> next = target_iter -> node;
     }
   // Reassign the iterator to the new node
-  target_iter->node = node;
-  target_iter->index = index;
+  target_iter -> node = node;
+  target_iter -> index = index;
   // Sets the frequency of this node to 1 as this is the first instance of it
   // in the list
   ascii_list[ (int) value ] = 1;
@@ -241,14 +241,14 @@ Iterator* find( Linked_List *list, char value )
   // Initialize new iterator to the head of the list
   Iterator *iter = init_iter( list );
   // Iterate through list until character value is found
-  while( iter->node->next != NULL )
+  while( iter -> node -> next != NULL )
     {
       // If the values are the same, the iterator should be returned
-      if( iter->node->value == value )
+      if( iter -> node -> value == value )
         return iter;
       // Update the iterator 
-      ++iter->index;
-      iter->node = iter->node->next;
+      ++iter -> index;
+      iter -> node = iter -> node -> next;
     }
   // If the while loop finished without finding the value, return NULL
   return NULL;
@@ -269,12 +269,12 @@ Iterator* remove_node( Iterator *iter )
   else
     {
       // Sets node's previous and next fields to point to each other
-      iter->node->prev->next = iter->node->next;
-      iter->node->next->prev = iter->node->prev;
+      iter -> node -> prev -> next = iter -> node -> next;
+      iter -> node -> next -> prev = iter -> node -> prev;
       // Free's the removed node
-      free( iter->node );
+      free( iter -> node );
       // Points the iterator to the next node
-      iter->node = iter->node->next;
+      iter -> node = iter -> node -> next;
     }
   // If the remove was succesful, the iterator is returned
   return iter;
@@ -308,26 +308,57 @@ Iterator* insertion_sort( Linked_List *list )
   // elements in the list then this call to get returns the tail and the program won't execute properly.
   // Therefore first check if the head's next next is the list tail ( indicating the list has one element ) and
   // return an new iterator pointing to the list. 
-  if( (list->head->next->next == list->tail) || (list->head->next == list->tail) )
+  if( ( list -> head -> next -> next == list -> tail ) || ( list -> head -> next == list -> tail ) )
     return init_iter( list );
   // Sets an iterator to point to the second element in the list ( index 1 )
   Iterator *iter = get( list, 1 );
   // Iterate through the list until we reach the tail
-  while( iter->node != list->tail )
+  while( iter -> node != list -> tail )
     {
       // At each iteration of the outer loop this sets an inner iterator to point to the outer iterator 
       Iterator *inner = iter;
-      // While the inner iterator has previous nodes and the frequency of the previous node is greater
-      // than the frequency of the current node, swap those two nodes.
-      while( (inner->node->prev != NULL) && (ascii_list[(int)inner->node->prev->value] > ascii_list[(int)inner->node->value]) )
+      // While loop set to an infinite loop, break conditions are assessed at the start of each iteration. This is done because one of the conditionals is based upon node frequencies. The method used for
+      // accessing these frequencies differs based on node type so this logic is handled internally instead
+      // of in the looping condition.
+      while( 1 )
 	{
+	  // Temporary variables used for frequency comparison 
+	  int freq, prev_freq;
+	  // Nodes have two types: inner and leaf, these conditionals assess how to acces the frequency
+	  // of the node based on what type of node each is. If a node is a leaf then access its frequency
+	  // through its values place in the ascii list. If it's an internal node then its frequency
+	  // is the value of the node. Otherwise, the node type is invalid and a stderr message is printed
+	  // before returning the iterator. 
+	  if( inner -> node -> type == LEAF )
+	    freq = ascii_list[ (int) inner -> node -> value ];
+	  else if( inner -> node -> type == INTERNAL )
+	    freq = inner -> node -> value;
+	  else
+	    {
+	      fprintf( stderr, "Invalid node type" );
+	      return iter;
+	    } 
+	  if( inner -> node -> prev -> type == LEAF )
+	    prev_freq = ascii_list[ (int) inner -> node -> prev -> value ];
+	  else if( inner -> node -> prev -> type == INTERNAL )
+	    prev_freq = inner -> node -> prev -> value;
+	  else
+	    {
+	      fprintf( stderr, "Invalid node type" );
+	      return iter;
+	    }
+	  // This is the while loop's actual conditional statement:
+	  // While the inner iterator has previous nodes and the frequency of the previous node is greater
+	  // than the frequency of the current node, swap these two nodes.
+	  if( prev_freq <= freq || inner -> node -> prev == NULL )
+	    break; 
 	  // Sets temporary iterators to point to the inner node and the previous inner node
-	  Iterator *iter1 = find( list, inner->node->value );
-	  Iterator *iter2 = find( list, inner->node->prev->value );
+	  Iterator *iter1 = find( list, inner -> node -> value );
+	  Iterator *iter2 = find( list, inner -> node -> prev -> value );
 	  // Calls the swap helper function
 	  swap( iter1, iter2 );
 	  // Moves the inner node to its previous node
-	  inner->node = inner->node->prev;
+	  inner -> node = inner -> node -> prev;
 	  // Frees memory allocated for temporary lists
 	  free( iter1 );
 	  free( iter2 );
@@ -335,13 +366,13 @@ Iterator* insertion_sort( Linked_List *list )
       // If the outer while loop will break on the next iteration, free the inner iterator.
       // This needs to be done inside the outer while loop as if the outer while loop never
       // executed then the inner iterator would never have been instantiated. 
-      if( iter->node->next == list->tail)
+      if( iter -> node -> next == list -> tail)
 	{
 	  free( inner );
 	  break;
 	}
       // Sets the outer iterator to point to its next node.
-      iter->node = iter->node->next;
+      iter -> node = iter -> node -> next;
     }
   return iter;
   
@@ -389,7 +420,19 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
   Iterator *iter_root = malloc( sizeof( Iterator ) );
   iter_root -> index = 0;
   iter_root -> node = root;
-  root -> value = ascii_list[ ascii_index1 ] + ascii_list[ ascii_index2 ];
+  // Verifies that the nodes iter1 and iter2 are pointing to have valid types because the next step
+  // uses the type to access frequencies from the nodes 
+  if( ( iter1 -> node -> type != ( INTERNAL || LEAF ) ) || ( iter2 -> node -> type != ( INTERNAL || LEAF ) ) )
+    {
+      fprintf( stderr, "Invalid node type." );
+      return;
+    }
+  // Internal nodes will have their frequencies stored as that node's value while leaf nodes
+  // have their frequencies stored in the ascii_list. These conditional statements handle which method
+  // to use when accessing the frequencies. 
+  int left_sum = iter1 -> node -> type == INTERNAL ? iter1 -> node -> value : ascii_list[ ascii_index1 ];
+  int right_sum = iter2 -> node -> type == INTERNAL ? iter2 -> node -> value : ascii_list[ ascii_index2 ];
+  root -> value = left_sum + right_sum;
   // Make the children be the two parameter nodes
   root -> left = iter1 -> node;
   root -> right = iter2 -> node;
@@ -408,7 +451,7 @@ void print_list( Linked_List *list )
   Iterator *iter = init_iter( list );
   // Checks to see if the list is empty and prints a message and then returns
   // if this is the case. 
-  if( list->head->next == list->tail )
+  if( list -> head -> next == list -> tail )
     {
       printf( "Empty list, please insert elements!\n" );
       free( iter );
@@ -416,12 +459,12 @@ void print_list( Linked_List *list )
     }
   // Iterates while the current node isn't the tail and prints
   // the current nodes value
-  while( iter->node != list->tail )
+  while( iter -> node != list -> tail )
     {
-      printf( "%d ", iter->node->value );
-      if( iter->node->next == list->tail )
+      printf( "%c ", iter -> node -> value );
+      if( iter -> node -> next == list -> tail )
 	break;
-      iter->node = iter->node->next;
+      iter -> node = iter -> node -> next;
     }
   printf( "\n" );
   // Frees the iterator
@@ -464,12 +507,19 @@ int main()
   insert( list, 0, 'r' );
   insert( list, 0, 'r' );
   insert( list, 0, 'a' );
+  ascii_list[ (int) 'h' ] = 1;
+  ascii_list[ (int) 'i' ] = 2;
+  ascii_list[ (int) ' ' ] = 3;
+  ascii_list[ (int) 'e' ] = 4;
+  ascii_list[ (int) 'z' ] = 5;
+  ascii_list[ (int) 'r' ] = 6;
+  ascii_list[ (int) 'a' ] = 7;
   print_list( list );
   printf("\n");
   insertion_sort( list );
-  Iterator *iter1 = get( list, 0 );
-  Iterator *iter2 = get( list, 1 );
-  fuse( list, iter1, iter2 );
+  //Iterator *iter1 = get( list, 0 );
+  //Iterator *iter2 = get( list, 1 );
+  //fuse( list, iter1, iter2 );
   print_list( list );
 
 }
