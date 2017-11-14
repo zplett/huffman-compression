@@ -317,7 +317,8 @@ Iterator* insertion_sort( Linked_List *list )
     {
       // At each iteration of the outer loop this sets an inner iterator to point to the outer iterator 
       Iterator *inner = iter;
-      // While loop set to an infinite loop, break conditions are assessed at the start of each iteration. This is done because one of the conditionals is based upon node frequencies. The method used for
+      // While loop set to an infinite loop, break conditions are assessed at the start of each iteration.
+      // This is done because one of the conditionals is based upon node frequencies. The method used for
       // accessing these frequencies differs based on node type so this logic is handled internally instead
       // of in the looping condition.
       while( 1 )
