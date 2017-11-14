@@ -63,3 +63,8 @@ void swap( Iterator *iter1, Iterator *iter2 );
 #define PRINT_LIST
 void print_list( Linked_List *list );
 #endif
+
+#ifndef VERIFY_FREQ
+#define VERIFY_FREQ
+int verify_freq( char value );
+#endif
