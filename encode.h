@@ -1,4 +1,4 @@
-/* Header file for list implementations
+/* Header file for list and tree implementations
  *
  */
 

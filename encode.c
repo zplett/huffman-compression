@@ -7,7 +7,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "list.h"
+#include "encode.h"
 
 int ascii_list[ 256 ] = { 0 };
 
