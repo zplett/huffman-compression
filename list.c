@@ -275,7 +275,7 @@ void insert_ready_node( Linked_List *list, int index, Iterator *iter )
   iter -> index = target -> index;
   target -> index += 1;
   // Frees iterator to node
-  free( iter );
+  free( target );
   
 }
 
@@ -410,7 +410,7 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
   int ascii_index2 = (int) iter2 -> node -> value;
   // Create a root internal node with value being the sum of the frequencies of both parameter nodes
   Tree_Node *root = init_tree_node();
-  Iterator *iter_root = malloc( sizeof( Iterator ) );
+  Iterator *iter_root = malloc( sizeof( *iter_root ) );
   iter_root -> index = 0;
   iter_root -> node = root;
   // Internal nodes will have their frequencies stored as that node's value while leaf nodes
@@ -504,7 +504,7 @@ int main()
   insertion_sort( list );
   Iterator *iter1 = get( list, 0 );
   Iterator *iter2 = get( list, 1 );
-  //fuse( list, iter1, iter2 );
+  fuse( list, iter1, iter2 );
   print_list( list );
   free_list( list );
   free( iter1 );
