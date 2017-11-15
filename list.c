@@ -391,7 +391,20 @@ void swap( Iterator *iter1, Iterator *iter2 )
 /** Fuses two nodes to make a tree */
 void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
 {
-  
+
+  // Checks whether or not the iterators point to nodes
+  if( ( iter1 -> node == NULL ) || ( iter2 -> node == NULL ) )
+    {
+      fprintf( stderr, "Iterator points to an invalid node." );
+      return;
+    }
+  // Verifies that the nodes iter1 and iter2 are pointing to have valid types because the next step
+  // uses the type to access frequencies from the nodes
+  if( ( iter1 -> node -> type != ( INTERNAL || LEAF ) ) || ( iter2 -> node -> type != ( INTERNAL || LEAF ) ) )
+    {
+      fprintf( stderr, "Invalid node type." );
+      return;
+    }
   // Store the integer ascii value of each node for indexing the frequency array
   int ascii_index1 = (int) iter1 -> node -> value;
   int ascii_index2 = (int) iter2 -> node -> value;
@@ -400,13 +413,6 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
   Iterator *iter_root = malloc( sizeof( Iterator ) );
   iter_root -> index = 0;
   iter_root -> node = root;
-  // Verifies that the nodes iter1 and iter2 are pointing to have valid types because the next step
-  // uses the type to access frequencies from the nodes 
-  if( ( iter1 -> node -> type != ( INTERNAL || LEAF ) ) || ( iter2 -> node -> type != ( INTERNAL || LEAF ) ) )
-    {
-      fprintf( stderr, "Invalid node type." );
-      return;
-    } 
   // Internal nodes will have their frequencies stored as that node's value while leaf nodes
   // have their frequencies stored in the ascii_list. These conditional statements handle which method
   // to use when accessing the frequencies. 
