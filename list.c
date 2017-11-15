@@ -170,33 +170,10 @@ Iterator* init_iter( Linked_List *list )
   
 }
 
-/** Verifies whether or not a value has been entered already */
-int verify_freq( char value )
-{
-
-  // If the frequency at this value is greater than zero, this
-  // value has already been added to the list, return 0 ( true )
-  if( ascii_list[ (int) value ] > 0 )
-      return 0;
-  // This value has a frequency of 0, return -1 ( false )
-  return -1;
-
-}
-
 /** Function that assigns the iterator to the given index */
-Iterator* insert( Linked_List *list, int index, char value )
+void insert( Linked_List *list, int index, char value )
 {
 
-  // Checks to see if this value has already been added to the list.
-  // If it has, then the freq for this value is incremented and an
-  // iterator pointing to the node with this value is returned.
-  // If the value hasn't been added, the corresponding index will be
-  // incremented after the insertion is verified.
-  if( verify_freq( value ) == 0 )
-    {
-      ascii_list[ (int) value ] += 1;
-      return get( list, index );
-    }
   // Make a new node
   Tree_Node *node = init_tree_leaf();
   // The value of the tree node in the list node is set to parameter value
@@ -207,28 +184,28 @@ Iterator* insert( Linked_List *list, int index, char value )
   if( list -> head -> next == list -> tail )
     target_iter -> node = list -> tail; 
   // If list is not empty
-  else  
-    target_iter = get( list, index );
+  else
+    {
+      free( target_iter );
+      target_iter = get( list, index );
+    }
   // Link the new node in place
   if( target_iter -> node != NULL )
     {
-    if( target_iter -> node -> prev != NULL )
-      {
-        Tree_Node *temp = target_iter -> node -> prev;
-        node -> prev = temp;
-        temp -> next = node;
-      }
-    target_iter -> node -> prev = node;
-    node -> next = target_iter -> node;
+      if( target_iter -> node -> prev != NULL )
+	{
+	  Tree_Node *temp = target_iter -> node -> prev;
+	  node -> prev = temp;
+	  temp -> next = node;
+	}
+      target_iter -> node -> prev = node;
+      node -> next = target_iter -> node;
     }
   // Reassign the iterator to the new node
   target_iter -> node = node;
   target_iter -> index = index;
-  // Sets the frequency of this node to 1 as this is the first instance of it
-  // in the list
-  ascii_list[ (int) value ] = 1;
-  // Return re assigned iterator
-  return target_iter;
+  // Frees re assigned iterator
+  free( target_iter );
   
 }
 
@@ -271,8 +248,12 @@ Iterator* remove_node( Iterator *iter )
       iter -> node -> next -> prev = iter -> node -> prev;
       // Free's the removed node
       free( iter -> node );
+      if( iter -> node == NULL )
+	iter -> node = iter -> node -> prev;
       // Points the iterator to the next node
-      iter -> node = iter -> node -> next;
+      else
+	iter -> node = iter -> node -> next;
+     
     }
   // If the remove was succesful, the iterator is returned
   return iter;
@@ -280,7 +261,7 @@ Iterator* remove_node( Iterator *iter )
 }
 
 /** Insert a premade node */
-Iterator* insert_ready_node( Linked_List *list, int index, Iterator *iter )
+void insert_ready_node( Linked_List *list, int index, Iterator *iter )
 {
   
   // Get the surrounding nodes
@@ -293,8 +274,8 @@ Iterator* insert_ready_node( Linked_List *list, int index, Iterator *iter )
   target -> node -> prev = iter -> node;
   iter -> index = target -> index;
   target -> index += 1;
-  // Return iterator to node
-  return iter;
+  // Frees iterator to node
+  free( iter );
   
 }
 
@@ -412,8 +393,8 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
 {
   
   // Store the integer ascii value of each node for indexing the frequency array
-  int ascii_index1 = (int)iter1 -> node -> value;
-  int ascii_index2 = (int)iter2 -> node -> value;
+  int ascii_index1 = (int) iter1 -> node -> value;
+  int ascii_index2 = (int) iter2 -> node -> value;
   // Create a root internal node with value being the sum of the frequencies of both parameter nodes
   Tree_Node *root = init_tree_node();
   Iterator *iter_root = malloc( sizeof( Iterator ) );
@@ -425,7 +406,7 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
     {
       fprintf( stderr, "Invalid node type." );
       return;
-    }
+    } 
   // Internal nodes will have their frequencies stored as that node's value while leaf nodes
   // have their frequencies stored in the ascii_list. These conditional statements handle which method
   // to use when accessing the frequencies. 
@@ -471,9 +452,12 @@ void print_list( Linked_List *list )
   
 }
 
+/** Frees the memory allocated for a list */
 void free_list( Linked_List *list )
 {
 
+  // Creates an iterator over the list and free each node while
+  // the iterator's node has non null values
   Iterator *iter = init_iter( list );
   while( iter -> node != NULL )
     {
@@ -482,8 +466,9 @@ void free_list( Linked_List *list )
       iter -> node = iter -> node -> next;
       free( temp );
     }
-
+  // Frees the list and the temporary iterator
   free( iter );
+  free( list -> head );
   free( list );
   
 }
@@ -495,35 +480,12 @@ int main()
  
   Linked_List *list = init_list();
   insert( list, 0, 'r' );
-  insert( list, 0, 'r' );
-  insert( list, 0, 'r' );
-  insert( list, 0, 'i' );
+  insert( list, 0, ' ' );
+  insert( list, 0, 'a' );
+  insert( list, 0, 'e' );
   insert( list, 0, 'h' );
   insert( list, 0, 'i' );
   insert( list, 0, 'z' );
-  insert( list, 0, 'e' );
-  insert( list, 0, 'a' );
-  insert( list, 0, ' ' );
-  insert( list, 0, ' ' );
-  insert( list, 0, ' ' );
-  insert( list, 0, 'a' );
-  insert( list, 0, 'z' );
-  insert( list, 0, 'a' );
-  insert( list, 0, 'a' );
-  insert( list, 0, 'z' );
-  insert( list, 0, 'e' );
-  insert( list, 0, 'e' );
-  insert( list, 0, 'a' );
-  insert( list, 0, 'a' );
-  insert( list, 0, 'e' );
-  insert( list, 0, 'e' );
-  insert( list, 0, 'z' );
-  insert( list, 0, 'z' );
-  insert( list, 0, 'z' );
-  insert( list, 0, 'r' );
-  insert( list, 0, 'r' );
-  insert( list, 0, 'r' );
-  insert( list, 0, 'a' );
   ascii_list[ (int) 'h' ] = 1;
   ascii_list[ (int) 'i' ] = 2;
   ascii_list[ (int) ' ' ] = 3;
@@ -536,8 +498,10 @@ int main()
   insertion_sort( list );
   Iterator *iter1 = get( list, 0 );
   Iterator *iter2 = get( list, 1 );
-  fuse( list, iter1, iter2 );
+  //fuse( list, iter1, iter2 );
   print_list( list );
   free_list( list );
+  free( iter1 );
+  free( iter2 );
   
 }

@@ -46,7 +46,7 @@ Iterator* find( Linked_List*, char);
 
 #ifndef INSERT
 #define INSERT
-Iterator* insert( Linked_List *list, int index , char value );
+void insert( Linked_List *list, int index , char value );
 #endif
 
 #ifndef REMOVE
@@ -64,7 +64,12 @@ void swap( Iterator *iter1, Iterator *iter2 );
 void print_list( Linked_List *list );
 #endif
 
-#ifndef VERIFY_FREQ
-#define VERIFY_FREQ
-int verify_freq( char value );
+#ifndef FREE_LIST
+#define FREE_LIST
+void free_list( Linked_List *list );
+#endif
+
+#ifndef INSERT_READY_NODE
+#define INSERT_READY_NODE
+void insert_ready_node( Linked_List *list, int index, Iterator *iter );
 #endif
