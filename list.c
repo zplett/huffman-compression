@@ -471,6 +471,23 @@ void print_list( Linked_List *list )
   
 }
 
+void free_list( Linked_List *list )
+{
+
+  Iterator *iter = init_iter( list );
+  while( iter -> node != NULL )
+    {
+      // Free each node one by one
+      Tree_Node *temp = iter -> node;
+      iter -> node = iter -> node -> next;
+      free( temp );
+    }
+
+  free( iter );
+  free( list );
+  
+}
+
 /** Main function */
 int main()
 {
@@ -517,9 +534,10 @@ int main()
   print_list( list );
   printf("\n");
   insertion_sort( list );
-  //Iterator *iter1 = get( list, 0 );
-  //Iterator *iter2 = get( list, 1 );
-  //fuse( list, iter1, iter2 );
+  Iterator *iter1 = get( list, 0 );
+  Iterator *iter2 = get( list, 1 );
+  fuse( list, iter1, iter2 );
   print_list( list );
-
+  free_list( list );
+  
 }
