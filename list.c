@@ -95,7 +95,7 @@ Tree_Node* init_tree_leaf()
 {
 
   // Allocates memory for the tree node
-  Tree_Node *tree_node = malloc( sizeof( Tree_Node ) );
+  Tree_Node *tree_node = malloc( sizeof( *tree_node ) );
   // Initializes the value fields of a tree node
   if( tree_node != NULL )
     {
@@ -106,7 +106,6 @@ Tree_Node* init_tree_leaf()
       tree_node -> prev = NULL;
       tree_node -> next = NULL;
     }
-
   return tree_node;
   
 }
@@ -116,7 +115,7 @@ Tree_Node* init_tree_node()
 {
 
   // Allocates memory for the tree node
-  Tree_Node *tree_node = malloc( sizeof( Tree_Node ) );
+  Tree_Node *tree_node = malloc( sizeof( *tree_node ) );
   // Initializes the value fields of a tree node
   if( tree_node != NULL )
     {
@@ -127,7 +126,6 @@ Tree_Node* init_tree_node()
       tree_node -> prev = NULL;
       tree_node -> next = NULL;
     }
- 
   return tree_node;
 
 }
@@ -137,7 +135,7 @@ Linked_List* init_list( )
 {
 
   // Allocates memory for the list
-  Linked_List *list = malloc( sizeof( Linked_List ) );
+  Linked_List *list = malloc( sizeof( *list ) );
   // Initializes the sentinel nodes
   if( list != NULL )
     {
@@ -157,11 +155,11 @@ Linked_List* init_list( )
 Iterator* init_iter( Linked_List *list )
 {
 
+  // Makes sure that the list has a head node
   if( list -> head == NULL )
     return NULL;
-
   // Make new iterator point to list head
-  Iterator *iter_ptr = malloc( sizeof( Iterator* ) );
+  Iterator *iter_ptr = malloc( sizeof( *iter_ptr ) );
   if( iter_ptr != NULL )
     {
       iter_ptr -> index = 0;
@@ -247,7 +245,7 @@ Iterator* find( Linked_List *list, char value )
       if( iter -> node -> value == value )
         return iter;
       // Update the iterator 
-      ++iter -> index;
+      iter -> index += 1;
       iter -> node = iter -> node -> next;
     }
   // If the while loop finished without finding the value, return NULL
@@ -477,6 +475,7 @@ void print_list( Linked_List *list )
 int main()
 {
 
+ 
   Linked_List *list = init_list();
   insert( list, 0, 'r' );
   insert( list, 0, 'r' );
