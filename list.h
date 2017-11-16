@@ -73,3 +73,8 @@ void free_list( Linked_List *list );
 #define INSERT_READY_NODE
 void insert_ready_node( Linked_List *list, int index, Iterator *iter );
 #endif
+
+#ifndef PRE_ORDER
+#define PRE_ORDER
+void pre_order( Tree_Node *root_node );
+#endif

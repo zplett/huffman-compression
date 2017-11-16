@@ -477,6 +477,7 @@ void free_list( Linked_List *list )
   
 }
 
+
 /** Build the huffman tree */
 Tree_Node* build_huff_tree( Linked_List *list )
 {
@@ -503,6 +504,38 @@ Tree_Node* build_huff_tree( Linked_List *list )
     }
   
   return iter1 -> node;
+}
+
+
+
+/** Recursive pre-order tree traversal */
+void pre_order( Tree_Node *root_node )
+{
+
+  // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
+  // no more levels of the tree to be traversed.
+  if( root_node -> type == LEAF )
+    {
+      printf( "%c", root_node -> value );
+      return;
+    }
+  // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
+  // a traversal to the left and a 1 indicating a traversal to the right. 
+  else
+    {
+      if( root_node -> left != NULL )
+	{
+	  printf( "%d", 0 );
+	  pre_order( root_node -> left );
+	}
+      if( root_node -> right != NULL )
+	{
+	  printf( "%d", 1 );
+	  pre_order( root_node -> right );
+	}
+      return;
+    }
+  
 }
 
 
