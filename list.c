@@ -246,8 +246,6 @@ Iterator* remove_node( Iterator *iter )
       // Sets node's previous and next fields to point to each other
       iter -> node -> prev -> next = iter -> node -> next;
       iter -> node -> next -> prev = iter -> node -> prev;
-      // Frees the removed node
-      free( iter -> node );
     }
   // If the remove was succesful, the iterator is returned
   return iter;
@@ -262,12 +260,16 @@ void insert_ready_node( Linked_List *list, int index, Iterator *iter )
   Iterator *target = get( list, index );
   Tree_Node *target_prev = target -> node -> prev;
   // Link in the list
+  printf("okay\n");
   iter -> node -> next = target -> node;
   iter -> node -> prev = target_prev;
+  printf("not the prev and next\n");
   target_prev -> next = iter -> node;
+  printf("hm?");
   target -> node -> prev = iter -> node;
   iter -> index = target -> index;
   target -> index += 1;
+  printf("whatttttttt?");
   // Frees iterator to node
   free( target );
   
@@ -394,11 +396,11 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
     }
   // Verifies that the nodes iter1 and iter2 are pointing to have valid types because the next step
   // uses the type to access frequencies from the nodes
-  if( ( iter1 -> node -> type != ( INTERNAL || LEAF ) ) || ( iter2 -> node -> type != ( INTERNAL || LEAF ) ) )
+  if( ( iter1 -> node -> type !=  INTERNAL && iter1 -> node -> type != LEAF  ) || ( iter2 -> node -> type !=  INTERNAL && iter2 -> node -> type != LEAF ) ) 
     {
       fprintf( stderr, "Invalid node type." );
       return;
-    }
+      }
   // Store the integer ascii value of each node for indexing the frequency array
   int ascii_index1 = (int) iter1 -> node -> value;
   int ascii_index2 = (int) iter2 -> node -> value;
@@ -413,11 +415,13 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
   int left_sum = iter1 -> node -> type == INTERNAL ? iter1 -> node -> value : ascii_list[ ascii_index1 ];
   int right_sum = iter2 -> node -> type == INTERNAL ? iter2 -> node -> value : ascii_list[ ascii_index2 ];
   root -> value = left_sum + right_sum;
+  printf("Iter1 = %d\nIter2 = %d\n", iter1->node->value, iter2->node->value);
   // Make the children be the two parameter nodes
   root -> left = iter1 -> node;
   root -> right = iter2 -> node;
   remove_node( iter1 );
   remove_node( iter2 );
+  printf("%d\n", iter_root -> node -> right  -> value);
   insert_ready_node( list, 0, iter_root );
   free( iter_root );
   
@@ -441,7 +445,7 @@ void print_list( Linked_List *list )
   // the current nodes value
   while( iter -> node != list -> tail )
     {
-      printf( "%c ", iter -> node -> value );
+      printf( "%d ", iter -> node -> value );
       if( iter -> node -> next == list -> tail )
 	break;
       iter -> node = iter -> node -> next;
@@ -473,6 +477,35 @@ void free_list( Linked_List *list )
   
 }
 
+/** Build the huffman tree */
+Tree_Node* build_huff_tree( Linked_List *list )
+{
+
+  Iterator *iter1 = NULL, *iter2 = NULL;
+  // Loop until there is only one root
+  int i = 0;
+  while( i < 4 )
+    {
+      // Sort the list
+      insertion_sort( list );
+      // Instantiate iterators with first and second node
+      iter1 = get( list, 0 );
+      iter2 = get( list, 1 );
+      // Fuse the two nodes
+      if( iter2 -> node != list -> tail ) {
+        printf( "%d, %d\n", iter1 -> node -> value, iter2 -> node -> value );       
+        fuse( list, iter1, iter2 );
+      }
+      else
+        break;
+
+      ++i;
+    }
+  
+  return iter1 -> node;
+}
+
+
 /** Main function */
 int main()
 {
@@ -495,13 +528,16 @@ int main()
   ascii_list[ (int) 'a' ] = 7;
   print_list( list );
   printf("\n");
+  build_huff_tree( list );
+  /*
   insertion_sort( list );
   Iterator *iter1 = get( list, 0 );
   Iterator *iter2 = get( list, 1 );
   fuse( list, iter1, iter2 );
+  */
   print_list( list );
   free_list( list );
-  free( iter1 );
-  free( iter2 );
+  //free( iter1 );
+  //free( iter2 );
   
 }
