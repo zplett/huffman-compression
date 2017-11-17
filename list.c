@@ -372,6 +372,10 @@ void swap( Iterator *iter1, Iterator *iter2 )
   iter2 -> node -> left = temp -> left;
   iter2 -> node -> right = temp -> right;
   iter2 -> index = temporary_index;
+  // Switch types (leaf vs internal)
+  node_type temp_type = iter1 -> node -> type;
+  iter1 -> node -> type = iter2 -> node -> type;
+  iter2 -> node -> type = temp_type;
   // Free our temporary copy
   free( temp );
   // Swap the iterators
@@ -476,14 +480,14 @@ void free_list( Linked_List *list )
 /** Build the huffman tree */
 Tree_Node* build_huff_tree( Linked_List *list )
 {
-
+  
   // Initializes iterators
   Iterator *iter1 = get( list, 0 );
   Iterator *iter2 = NULL;
   // Checks to see if the list has only one element, if it doesn then an iterator
   // pointing to that node is returned
   if( list -> head -> next -> next == list -> tail )
-      return iter1 -> node;
+    return iter1 -> node;
   // Otherwise iter2 is assigned to the second element in the list
   else
     iter2 = get( list, 1 );
@@ -494,18 +498,20 @@ Tree_Node* build_huff_tree( Linked_List *list )
       insertion_sort( list );
       // Fuse the two nodes
       if( iter2 -> node -> next != list -> tail )
-	{
-	  // Instantiate iterators with first and second node
-	  iter1 = get( list, 0 );
-	  iter2 = get( list, 1 );
-	  printf( "PREFUSE: %d, %d\n", iter1 -> node -> value, iter2 -> node -> value );       
-	  fuse( list, iter1, iter2 );
-      }
+        {
+          // Instantiate iterators with first and second node
+          iter1 = get( list, 0 );
+          iter2 = get( list, 1 );
+          print_list( list );
+          fuse( list, iter1, iter2 );
+        }
       else
         break;
-    }  
-  return iter1 -> node;
-
+    }
+  Tree_Node *node = iter1 -> node;
+  free( iter1 );
+  return node;
+  
 }
 
 
@@ -518,7 +524,7 @@ void pre_order( Tree_Node *root_node )
   // no more levels of the tree to be traversed.
   if( root_node -> type == LEAF )
     {
-      printf( "%c", root_node -> value );
+      printf( "%c\n", root_node -> value );
       return;
     }
   // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
@@ -526,15 +532,15 @@ void pre_order( Tree_Node *root_node )
   else
     {
       if( root_node -> left != NULL )
-	{
-	  printf( "%d", 0 );
-	  pre_order( root_node -> left );
-	}
+        {
+          printf( "%d", 0 );
+          pre_order( root_node -> left );
+        }
       if( root_node -> right != NULL )
-	{
-	  printf( "%d", 1 );
-	  pre_order( root_node -> right );
-	}
+        {
+          printf( "%d", 1 );
+          pre_order( root_node -> right );
+        }
       return;
     }
   
@@ -563,12 +569,6 @@ int main()
   print_list( list );
   printf("\n");
   build_huff_tree( list );
-  /*
-  insertion_sort( list );
-  Iterator *iter1 = get( list, 0 );
-  Iterator *iter2 = get( list, 1 );
-  fuse( list, iter1, iter2 );
-  */
   print_list( list );
   printf("\n");
   pre_order( list -> head -> next );
