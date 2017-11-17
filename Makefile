@@ -12,13 +12,13 @@ endif
 # End of OS specification
 
 # Compilation specification
-all: list
+all: encode
 
-list.o: list.c list.h
-	$(CC) -c list.c
+encode.o: encode.c list.c list.h
+	$(CC) -c encode.c list.c
 
-list: list.o list.h
-	$(CC) list.o -o list
+encode: encode.o list.o list.h
+	$(CC) encode.o -o encode 
 
 clean:
-	rm -f *.o list 
+	rm -f *.o encode

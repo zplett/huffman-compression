@@ -341,7 +341,7 @@ Iterator* insertion_sort( Linked_List *list )
       // If the outer while loop will break on the next iteration, free the inner iterator.
       // This needs to be done inside the outer while loop as if the outer while loop never
       // executed then the inner iterator would never have been instantiated. 
-      if( iter -> node -> next == list -> tail )
+      if( iter -> node  == list -> tail )
 	{
 	  free( inner );
 	  break;
@@ -520,11 +520,13 @@ Tree_Node* build_huff_tree( Linked_List *list )
 void pre_order( Tree_Node *root_node )
 {
 
+  printf( "%d: ", root_node -> value );
+      
   // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
   // no more levels of the tree to be traversed.
   if( root_node -> type == LEAF )
     {
-      printf( "%c\n", root_node -> value );
+      printf("end leaf\n");
       return;
     }
   // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
@@ -533,12 +535,12 @@ void pre_order( Tree_Node *root_node )
     {
       if( root_node -> left != NULL )
         {
-          printf( "%d", 0 );
+          printf( "%d\n", 0 );
           pre_order( root_node -> left );
         }
       if( root_node -> right != NULL )
         {
-          printf( "%d", 1 );
+          printf( "%d\n", 1 );
           pre_order( root_node -> right );
         }
       return;
@@ -546,26 +548,23 @@ void pre_order( Tree_Node *root_node )
   
 }
 
-
-/** Main function */
+/*
 int main()
 {
 
   Linked_List *list = init_list();
-  insert( list, 0, 'r' );
-  insert( list, 0, ' ' );
-  insert( list, 0, 'a' );
-  insert( list, 0, 'e' );
+  insert( list, 0, 'c' );
   insert( list, 0, 'h' );
-  insert( list, 0, 'i' );
-  insert( list, 0, 'z' );
+  insert( list, 0, 'e' );
+  insert( list, 0, 's' );
+  insert( list, 0, '\n');
+  insert( list, 0, 0 );
+  ascii_list[ (int) 'c' ] = 1;
   ascii_list[ (int) 'h' ] = 1;
-  ascii_list[ (int) 'i' ] = 2;
-  ascii_list[ (int) ' ' ] = 3;
-  ascii_list[ (int) 'e' ] = 4;
-  ascii_list[ (int) 'z' ] = 5;
-  ascii_list[ (int) 'r' ] = 6;
-  ascii_list[ (int) 'a' ] = 7;
+  ascii_list[ (int) 'e' ] = 3;
+  ascii_list[ (int) 's' ] = 1;
+  ascii_list[ (int) '\n' ] = 1;
+  ascii_list[ (int) 0 ] = 1;
   print_list( list );
   printf("\n");
   build_huff_tree( list );
@@ -577,3 +576,4 @@ int main()
   //free( iter2 );
   
 }
+*/
