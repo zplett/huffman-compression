@@ -480,20 +480,18 @@ void free_list( Linked_List *list )
 /** Build the huffman tree */
 Tree_Node* build_huff_tree( Linked_List *list )
 {
-  
-  // Initializes iterators
-  Iterator *iter1 = get( list, 0 );
-  Iterator *iter2 = NULL;
+
+  // Initializes node
+  Tree_Node *node;
   // Checks to see if the list has only one element, if it doesn then an iterator
   // pointing to that node is returned
   if( list -> head -> next -> next == list -> tail )
-    return iter1 -> node;
-  // Otherwise iter2 is assigned to the second element in the list
-  else
-    iter2 = get( list, 1 );
+    return list -> head -> next;
   // Loop until there is only one root
   while( 1 )
     {
+      Iterator *iter1 = get( list, 0 );
+      Iterator *iter2 = get( list, 1 );
       // Sort the list
       insertion_sort( list );
       // Fuse the two nodes
@@ -504,12 +502,17 @@ Tree_Node* build_huff_tree( Linked_List *list )
           iter2 = get( list, 1 );
           print_list( list );
           fuse( list, iter1, iter2 );
-        }
+	  free( iter1 );
+	  free( iter2 );
+	}
       else
-        break;
+	{
+	  node = iter1 -> node;
+	  free( iter1 );
+	  free( iter2 );
+	  break;
+	}
     }
-  Tree_Node *node = iter1 -> node;
-  free( iter1 );
   return node;
   
 }
@@ -548,7 +551,7 @@ void pre_order( Tree_Node *root_node )
   
 }
 
-/*
+
 int main()
 {
 
@@ -576,4 +579,3 @@ int main()
   //free( iter2 );
   
 }
-*/
