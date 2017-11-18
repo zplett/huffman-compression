@@ -336,16 +336,15 @@ Iterator* insertion_sort( Linked_List *list )
 	  free( iter1 );
 	  free( iter2 );
 	}
-      // Sets the outer iterator to point to its next node.
+      // Sets the outer iterator to point to its next node
       iter = get( list, ++index );
+      // Frees the inner iterator as it is reallocated on the next loop
+      free( inner );
       // If the outer while loop will break on the next iteration, free the inner iterator.
       // This needs to be done inside the outer while loop as if the outer while loop never
       // executed then the inner iterator would never have been instantiated. 
       if( iter -> node  == list -> tail )
-	{
-	  free( inner );
 	  break;
-	}
     }
   return iter;
   
@@ -471,11 +470,10 @@ void free_list( Linked_List *list )
     }
   // Frees the list and the temporary iterator
   free( iter );
-  free( list -> head );
-  free( list );
+  //free( list -> head );
+  //free( list );
   
 }
-
 
 /** Build the huffman tree */
 Tree_Node* build_huff_tree( Linked_List *list )
@@ -493,13 +491,12 @@ Tree_Node* build_huff_tree( Linked_List *list )
       Iterator *iter1 = get( list, 0 );
       Iterator *iter2 = get( list, 1 );
       // Sort the list
-      insertion_sort( list );
+      Iterator *temp = insertion_sort( list );
+      free( temp );
       // Fuse the two nodes
-      if( iter2 -> node -> next != list -> tail )
+      if( iter2 -> node != list -> tail )
         {
           // Instantiate iterators with first and second node
-          iter1 = get( list, 0 );
-          iter2 = get( list, 1 );
           print_list( list );
           fuse( list, iter1, iter2 );
 	  free( iter1 );
@@ -515,67 +512,24 @@ Tree_Node* build_huff_tree( Linked_List *list )
     }
   return node;
   
-}
+} 
 
-
-
-/** Recursive pre-order tree traversal */
-void pre_order( Tree_Node *root_node )
+/** Recursive pre-order tree traversal for freeing the tree */
+void free_tree( Tree_Node *root_node )
 {
 
-  printf( "%d: ", root_node -> value );
-      
-  // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
-  // no more levels of the tree to be traversed.
-  if( root_node -> type == LEAF )
-    {
-      printf("end leaf\n");
-      return;
-    }
-  // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
-  // a traversal to the left and a 1 indicating a traversal to the right. 
-  else
+  // Recursive case: Preorder traversals call for root, left, right. We traverse the left then
+  // right children if they exist. 
+  if ( root_node -> type == INTERNAL )
     {
       if( root_node -> left != NULL )
-        {
-          printf( "%d\n", 0 );
-          pre_order( root_node -> left );
-        }
+          free_tree( root_node -> left );
       if( root_node -> right != NULL )
-        {
-          printf( "%d\n", 1 );
-          pre_order( root_node -> right );
-        }
-      return;
+          free_tree( root_node -> right );
     }
-  
-}
-
-
-int main()
-{
-
-  Linked_List *list = init_list();
-  insert( list, 0, 'c' );
-  insert( list, 0, 'h' );
-  insert( list, 0, 'e' );
-  insert( list, 0, 's' );
-  insert( list, 0, '\n');
-  insert( list, 0, 0 );
-  ascii_list[ (int) 'c' ] = 1;
-  ascii_list[ (int) 'h' ] = 1;
-  ascii_list[ (int) 'e' ] = 3;
-  ascii_list[ (int) 's' ] = 1;
-  ascii_list[ (int) '\n' ] = 1;
-  ascii_list[ (int) 0 ] = 1;
-  print_list( list );
-  printf("\n");
-  build_huff_tree( list );
-  print_list( list );
-  printf("\n");
-  pre_order( list -> head -> next );
-  free_list( list );
-  //free( iter1 );
-  //free( iter2 );
+  // Regardless of the node type, the node needs to be freed. 
+  free( root_node );
+  // The function returns after evaluating both conditionals
+  return;
   
 }
