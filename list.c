@@ -78,12 +78,12 @@ Iterator* get( Linked_List *list, int index )
   // If the while loop finished then it hit tail ( if index is 0 and the list is empty, it will always return tail )
   if( index == 0 )
     {
-      fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
+      //fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
       return iter;
     }
   else if( index != 0 )
     {
-      fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
+      //fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
       return iter;
     }
   return iter;
@@ -502,13 +502,12 @@ Tree_Node* build_huff_tree( Linked_List *list )
           // Instantiate iterators with first and second node
           iter1 = get( list, 0 );
           iter2 = get( list, 1 );
-          print_list( list );
           fuse( list, iter1, iter2 );
         }
       else
         break;
     }
-  Tree_Node *node = iter1 -> node;
+  Tree_Node *node = list -> head -> next;
   free( iter1 );
   return node;
   
@@ -516,37 +515,6 @@ Tree_Node* build_huff_tree( Linked_List *list )
 
 
 
-/** Recursive pre-order tree traversal */
-void pre_order( Tree_Node *root_node )
-{
-
-  printf( "%d: ", root_node -> value );
-      
-  // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
-  // no more levels of the tree to be traversed.
-  if( root_node -> type == LEAF )
-    {
-      printf("end leaf\n");
-      return;
-    }
-  // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
-  // a traversal to the left and a 1 indicating a traversal to the right. 
-  else
-    {
-      if( root_node -> left != NULL )
-        {
-          printf( "%d\n", 0 );
-          pre_order( root_node -> left );
-        }
-      if( root_node -> right != NULL )
-        {
-          printf( "%d\n", 1 );
-          pre_order( root_node -> right );
-        }
-      return;
-    }
-  
-}
 
 /*
 int main()
