@@ -15,9 +15,9 @@ endif
 all: encode 
 
 encode.o: encode.c list.c list.h
-	$(CC) -c encode.c list.c
+	$(CC) -c list.c encode.c
 
-encode: encode.o list.o list.h
+encode: list.o encode.o list.h
 	$(CC) encode.o -o encode 
 
 clean:

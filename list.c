@@ -78,12 +78,12 @@ Iterator* get( Linked_List *list, int index )
   // If the while loop finished then it hit tail ( if index is 0 and the list is empty, it will always return tail )
   if( index == 0 )
     {
-      fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
+      //fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
       return iter;
     }
   else if( index != 0 )
     {
-      fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
+      //fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
       return iter;
     }
   return iter;
@@ -510,9 +510,11 @@ Tree_Node* build_huff_tree( Linked_List *list )
 	  break;
 	}
     }
+
   return node;
   
 } 
+
 
 /** Recursive pre-order tree traversal for freeing the tree */
 void free_tree( Tree_Node *root_node )
@@ -533,3 +535,4 @@ void free_tree( Tree_Node *root_node )
   return;
   
 }
+
