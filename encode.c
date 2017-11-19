@@ -1,8 +1,14 @@
+/* Zac Plett and Ezra Goss 
+ *
+ * This file contains the implementations of our encoding functionality
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include "list.c"
 
-char *bit_strings[256] = {""};
+char *bit_strings[ 256 ] = { "" };
 
 /** Recursive pre-order tree traversal */
 void pre_order( Tree_Node *root_node )

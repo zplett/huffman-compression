@@ -1,7 +1,6 @@
 /* Zac Plett and Ezra Goss
  *
  * This file contains the implementations of our list and tree structures
- * for this lab
  *
  */
 

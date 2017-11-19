@@ -1,4 +1,6 @@
-/* Header file for list and tree implementations
+/* Zac Plett and Ezra Goss
+ *
+ * Header file for list and tree implementations
  *
  */
 
@@ -74,9 +76,7 @@ void free_list( Linked_List *list );
 void insert_ready_node( Linked_List *list, int index, Iterator *iter );
 #endif
 
-
 #ifndef FREE_LIST
 #define FREE_LIST
 void free_list( Tree_Node *root_node );
 #endif
-
