@@ -1,3 +1,9 @@
+/* Zac Plett and Ezra Goss 
+ *
+ * This file contains the implementations of our encoding functionality
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
