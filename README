@@ -1,1 +1,21 @@
-README
+1. Zac Plett and Ezra Goss
+
+2. Our programs ( encode.c and decode.c ) can be used to encode information using a Huffman Tree or
+   decode input encoded information.
+
+3. Files:
+	- list.c: Contains our list, tree and node structures and the related functionality of
+	  	  the Huffman Trees.
+	- list.h: The header file for methods and structs used within list.c, encode.c, and decode.c.
+	- decode.c: Executable used to decode an encoded Huffman Tree.
+	- decode.h: Header file for methods within decode.c.
+	- encode.c: Executable used to encode information with Huffman's algorithm.
+	- encode.h: Header file for methods within encode.c.
+
+4. There are no known bugs and all functionality is complete.
+
+5. We spent an estimated 12 hours working on this lab.
+
+6. Interesting design choices: index out of bounds error on list traversal returns the tail, tried to encapsulate all input logic in a few functions to simulate the ability to read in bit by bit in the rest of our program.
+
+7. There are currently no valgrind errors or warnings. 

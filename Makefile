@@ -12,7 +12,7 @@ endif
 # End of OS specification
 
 # Compilation specification
-all: encode 
+all: encode decode
 
 encode.o: encode.c list.c list.h
 	$(CC) -c list.c encode.c
@@ -20,5 +20,11 @@ encode.o: encode.c list.c list.h
 encode: list.o encode.o list.h
 	$(CC) encode.o -o encode 
 
+decode.o: decode.c list.h
+	$(CC) -c decode.c
+
+decode: decode.o list.h
+	$(CC) decode.o -o decode
+
 clean:
-	rm -f *.o encode 
+	rm -f *.o encode decode 
