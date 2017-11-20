@@ -12,20 +12,8 @@
 #include "list.c"
 
 
-char *bit_strings[256];
-
-void init_bit_strings()
-{
-  // Initialize the array with empty strings
-  for( int i = 0; i < 256; ++i )
-    {
-      bit_strings[i] = 
-      strcpy( bit_strings[i], "" );
-    }
-}
-
 /** Shift a character 1 bit and output if it reaches the capacity of the byte */
-void shift( int binary )
+void shift( int binary, FILE *output )
 {
   // This is the output byte
   static char byte = 0;
@@ -44,7 +32,7 @@ void shift( int binary )
   
   if( counter == CHAR_BIT )
     {
-      printf( "%c", byte );
+      fprintf( output, "%c", byte );
       byte = 0;
       counter = 0;
     }
@@ -53,12 +41,12 @@ void shift( int binary )
     {
       // Make sure the padding is in the least position
       byte = byte << ( CHAR_BIT - ( counter - 1 ) );
-      printf("%c", byte );
+      fprintf( output, "%c", byte );
     }
 }
 
 /** Break character into bits and then shift output byte appropriately */
-void breakdown_character( char ch )
+void breakdown_character( char ch, FILE *output )
 {
   // Reference byte
   unsigned char byte = 1;
@@ -68,50 +56,39 @@ void breakdown_character( char ch )
   for( int i = 0; i < CHAR_BIT; ++i )
   {
     if( ( byte & ch ) != 0 )
-      shift( 1 );
+      shift( 1, output );
     else
-    shift( 0 );
+      shift( 0, output );
     byte = byte >> 1;
   } 
   
 }
 
-/** Copy the current path through the tree to the bitstring array */
-void set_bit_string( char value, char *bit_string )
-{
-  // Copy the current path into the bit_string array
-  strcpy( bit_strings[ (int)value ], bit_string ); 
-}
-
 /** Recursive pre-order tree traversal */
-void pre_order( Tree_Node *root_node, char *bit_string )
+void pre_order( Tree_Node *root_node, FILE *output  )
 {
   // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
   // no more levels of the tree to be traversed.
   if( root_node -> type == LEAF )
     {
-      // Set the bit string to current path
-      //set_bit_string( root_node -> value, bit_string );
       // Print a 1 bit
-      shift( 1 );
+      shift( 1, output );
       // Print the character
-      breakdown_character( root_node -> value );
+      breakdown_character( root_node -> value, output );
       return;
     }
   // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
   // a traversal to the left and a 1 indicating a traversal to the right. 
   else
     {
-      shift( 0 );
+      shift( 0, output );
       if( root_node -> left != NULL )
         {
-	  //          strcat( bit_string, "0" );
-          pre_order( root_node -> left, bit_string );
+          pre_order( root_node -> left, output );
         }
       if( root_node -> right != NULL )
         {
-          //strcat( bit_string, "1" );
-          pre_order( root_node -> right, bit_string );
+          pre_order( root_node -> right, output );
         }
       return;
     }
@@ -119,12 +96,61 @@ void pre_order( Tree_Node *root_node, char *bit_string )
 }
 
 
-/** Main function */
-int main()
+
+/** Function used to open and read the input file */
+FILE* open_file( int argc, char *argv[] )
 {
   
+  // Input file
+  FILE *file;
+  // If the user doesn't input a file name when running the executable the program exits
+  // as there is nothing to be decoeded.
+  if( argc == 1 )
+    {
+      fprintf( stderr, "File name not entered while running program\n" );
+      exit( -1 );
+    }
+  // Opens the file to be read
+  file = fopen( argv[ 1 ], "r" );
+  if( file == NULL )
+    {
+      fprintf( stderr, "File given is not valid\n" );
+      exit( -1 );
+    }
+  return file;
+  
+}
+
+/** Open output file */
+FILE* open_output( int argc, char *argv[] )
+{
+
+  char *filename = NULL;
+
+  // If there is a third argument, make the filename that argument
+  if( argc > 1 )
+    filename = argv[2];
+
+  FILE *file = NULL;
+  
+  if( filename != NULL )
+    file = fopen( filename, "w" );
+  else
+    return stdout;
+
+  return file;
+  
+}
+
+int main( int argc, char *argv[] )
+{
+  
+  // Open the files for input and output 
+  FILE *file = open_file( argc, argv );
+  FILE *output = open_output( argc, argv );
+  
   // Fill the ascii tree with frequencies
-  for( int ch = getchar(); ch != EOF;  ch = getchar() )
+  for( int ch = fgetc( file ); ch != EOF;  ch = fgetc( file ) )
     {
       // Increment the frequency for this character
       ++ascii_list[ ch ];
@@ -141,20 +167,16 @@ int main()
   insert( chars, 0, EOF );
   // Build the tree and get the root
   Tree_Node *root = build_huff_tree( chars );
-  //init_bit_strings();
-  char *bit_string = malloc( sizeof( *bit_string ) );
-  //strcpy( bit_string, "" );
-  pre_order( root, bit_string );
+  pre_order( root, output );
   // Flush the padding
-  shift( -1 );
+  shift( -1, output );
 
 
   free_tree( root );
   free( chars -> head );
   free( chars -> tail );
   free( chars );
-  free( bit_string );
-  for( int i = 0; i < 256; ++i )
-    free( bit_strings[i] );
-  
+  fclose( file );
+  fclose( output );
+ 
 }
