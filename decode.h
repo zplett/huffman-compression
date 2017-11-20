@@ -21,10 +21,20 @@ Tree_Node* construct_tree( FILE *file );
 
 #ifndef SHIFT_BIT
 #define SHIFT_BIT
-char OBshift_bit( );
+char shift_bit( );
 #endif
 
 #ifndef READ_BIT
 #define READ_BIT
-int read_bit( char byte, char ref );
+int read_bit( FILE *file );
+#endif
+
+#ifndef READ_BYTE
+#define READ_BYTE
+char read_byte( FILE *file );
+#endif
+
+#ifndef RECURSIVE_CONSTRUCT
+#define RECURSIVE_CONSTRUCT
+Tree_Node* recursive_construct( Tree_Node *node, FILE *file );
 #endif
