@@ -17,6 +17,7 @@ void pre_order( Tree_Node *root_node )
   // Base Case: If this node is a leaf.
   if( root_node -> type == LEAF )
     {
+      printf( "%c\n", root_node -> value );
       return;
     }
   // Recursive case: Preorder traversals call for root, left, right. 
@@ -24,10 +25,12 @@ void pre_order( Tree_Node *root_node )
     {
       if( root_node -> left != NULL )
 	{
+	  printf( "left\n" );
 	  pre_order( root_node -> left );
 	}
       if( root_node -> right != NULL )
 	{
+	  printf( "right\n" );
 	  pre_order( root_node -> right );
 	}
       return;
@@ -58,7 +61,7 @@ FILE* open_file( int argc, char *argv[] )
 char shift_bit()
 {
 
-  // Creates a character with the value 1 and then shifts it to the left
+  // Creates an unsigned character with the value 1 and then shifts it to the left
   // CHAR_BIT - 1 times.
   unsigned char byte = 1;
   return byte << ( CHAR_BIT - 1 );
@@ -70,7 +73,7 @@ char read_byte( FILE *file )
 {
 
   // byte is used to construct the next byte in the file
-  unsigned char byte = 0 << ( CHAR_BIT - 1 );
+  char byte = 0 << ( CHAR_BIT - 1 );
   // ref is used to keep track of where in the byte to insert ( or not insert ) a 1
   // into the byte
   unsigned char ref = shift_bit();
@@ -85,7 +88,9 @@ char read_byte( FILE *file )
       // Shift the reference to the left ( next position )
       ref = ref >> 1;
     }
+  // Returns the byte
   return byte;
+
 }
 
 /** Ands a byte and reference and returns 1 if the and value is != 0 and 0 otherwise */ 
@@ -117,6 +122,7 @@ int read_bit( FILE *file )
   // values get reset
   if( count == CHAR_BIT )
       count = 0;
+  // Returns the appropriate bit value
   return return_val;
   
 }
@@ -129,22 +135,10 @@ Tree_Node* construct_tree( FILE *file )
 
   // Node to be returned, will be the root of the reconstructed tree
   Tree_Node *root_node;
-  // If the first bit in the file is a 0, then the root node is an internal node, so an internal
-  // node is constructed and then input into the recursive tree building function.
-  if( read_bit( file ) == 0 )
-    {
-      Tree_Node *node = init_tree_node();
-      root_node = recursive_construct( node, file );
-      free( node );
-    }
-  // If the first bit wasn't a 0, that means it was a 1 which indicates the root node is a leaf, so
-  // a leaf node is constructed and then input into the recursive tree building function.
-  else
-    {
-      Tree_Node *leaf = init_tree_leaf();
-      root_node = recursive_construct( leaf, file );
-      free( leaf );
-    }
+  // Creates the node to passed through to recursive construct and then sets the
+  // return node equal to the return value of this function. 
+  Tree_Node *node = init_tree_node();
+  root_node = recursive_construct( node, file );
   // The root node is then returned
   return root_node;
   
@@ -154,23 +148,31 @@ Tree_Node* construct_tree( FILE *file )
 Tree_Node* recursive_construct( Tree_Node *node, FILE *file )
 {
 
-  // Sets the current node to the input node
-  Tree_Node *current = node;
   // Base case: if the next bit is a 1, this is a leaf node so the value of this current 
   // node is set to the next byte. 
   if( read_bit( file ) == 1 )
-      current -> value = read_byte( file );
+    {
+      // Frees the current node as it is defined as an internal node, sets the node to be a
+      // leaf node and then sets its value. 
+      free( node );
+      node = init_tree_leaf();
+      node -> value = read_byte( file );
+    }
   // Recursive case: Preorder calls for node, left, right so the value of the current internal
   // node is set to 0 and then the function is called recursively on the left and right
   // children of the current node. 
   else
     {
-      current -> value = 0;
-      recursive_construct( current -> left, file );
-      recursive_construct( current -> right, file );
+      // Sets the internal node's value and then constructs new left and right children nodes
+      // before calling the recursive calls on them. 
+      node -> value = 0;
+      node -> left = init_tree_node();
+      node -> left = recursive_construct( node -> left, file );
+      node -> right = init_tree_node();
+      node -> right = recursive_construct( node -> right, file );
     }
   // The current node is then returned
-  return current;
+  return node;
   
 }
 
@@ -180,9 +182,11 @@ int main( int argc, char *argv[] )
 
   // Input file
   FILE *file = open_file( argc, argv );
-  
+  Tree_Node *root = construct_tree( file );
+  pre_order( root );
+  free_tree( root );
   // Closes the file and returns 0 as the program ran successfully
+  fclose( file );
   return 0;
   
 }
-

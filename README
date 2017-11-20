@@ -19,3 +19,5 @@
 6. Interesting design choices: index out of bounds error on list traversal returns the tail, tried to encapsulate all input logic in a few functions to simulate the ability to read in bit by bit in the rest of our program.
 
 7. There are currently no valgrind errors or warnings. 
+
+We affirm that we have adhered to the honor code on this assignment. 

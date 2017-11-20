@@ -91,7 +91,7 @@ void pre_order( Tree_Node *root_node, char *bit_string )
   if( root_node -> type == LEAF )
     {
       // Set the bit string to current path
-      set_bit_string( root_node -> value, bit_string );
+      //set_bit_string( root_node -> value, bit_string );
       // Print a 1 bit
       shift( 1 );
       // Print the character
@@ -105,12 +105,12 @@ void pre_order( Tree_Node *root_node, char *bit_string )
       shift( 0 );
       if( root_node -> left != NULL )
         {
-          strcat( bit_string, "0" );
+	  //          strcat( bit_string, "0" );
           pre_order( root_node -> left, bit_string );
         }
       if( root_node -> right != NULL )
         {
-          strcat( bit_string, "1" );
+          //strcat( bit_string, "1" );
           pre_order( root_node -> right, bit_string );
         }
       return;
@@ -141,9 +141,9 @@ int main()
   insert( chars, 0, EOF );
   // Build the tree and get the root
   Tree_Node *root = build_huff_tree( chars );
-  init_bit_strings();
-  char *bit_string = malloc( sizeof( *bit_string ) + 1);
-  strcpy( bit_string, "" );
+  //init_bit_strings();
+  char *bit_string = malloc( sizeof( *bit_string ) );
+  //strcpy( bit_string, "" );
   pre_order( root, bit_string );
   // Flush the padding
   shift( -1 );
