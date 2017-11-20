@@ -313,7 +313,7 @@ Iterator* insertion_sort( Linked_List *list )
 	  // is the value of the node. Otherwise, the node type is invalid and a stderr message is printed
 	  // before returning the iterator. 
 	  if( inner -> node -> type == LEAF )
-	    freq = check_freq( inner -> node -> value ); //ascii_list[ (int) inner -> node -> value ];
+	    freq = check_freq( inner -> node -> value );
 	  else if( inner -> node -> type == INTERNAL )
 	    freq = inner -> node -> value;
 	  else
@@ -322,7 +322,7 @@ Iterator* insertion_sort( Linked_List *list )
 	      return iter;
 	    } 
 	  if( inner -> node -> prev -> type == LEAF )
-	    prev_freq = check_freq( inner -> node -> prev -> value ); // ascii_list[ (int) inner -> node -> prev -> value ];
+	    prev_freq = check_freq( inner -> node -> prev -> value ); 
 	  else if( inner -> node -> prev -> type == INTERNAL )
 	    prev_freq = inner -> node -> prev -> value;
 	  else
@@ -422,8 +422,8 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
   // Internal nodes will have their frequencies stored as that node's value while leaf nodes
   // have their frequencies stored in the ascii_list. These conditional statements handle which method
   // to use when accessing the frequencies. 
-  int left_sum = iter1 -> node -> type == INTERNAL ? iter1 -> node -> value : check_freq( ascii_index1 ); //ascii_list[ ascii_index1 ];
-  int right_sum = iter2 -> node -> type == INTERNAL ? iter2 -> node -> value : check_freq( ascii_index2 );  //ascii_list[ ascii_index2 ];
+  int left_sum = iter1 -> node -> type == INTERNAL ? iter1 -> node -> value : check_freq( ascii_index1 ); 
+  int right_sum = iter2 -> node -> type == INTERNAL ? iter2 -> node -> value : check_freq( ascii_index2 ); 
   root -> value = left_sum + right_sum;
   // Make the children be the two parameter nodes
   root -> left = iter1 -> node;
@@ -480,8 +480,6 @@ void free_list( Linked_List *list )
     }
   // Frees the list and the temporary iterator
   free( iter );
-  //free( list -> head );
-  //free( list );
   
 }
 
@@ -503,14 +501,16 @@ Tree_Node* build_huff_tree( Linked_List *list )
       // Sort the list
       Iterator *temp = insertion_sort( list );
       free( temp );
-      // Fuse the two nodes
+      // Checks to make sure the second iterator isn't pointing to the list's tail
       if( iter2 -> node != list -> tail )
         {
-          // Instantiate iterators with first and second node
+	  // Fuses the nodes from iter1 and iter2 and then frees both of the iterators
           fuse( list, iter1, iter2 );
           free( iter1 );
           free( iter2 );
         }
+      // If iter2's node does point to the list's tail, the node to be returned is set to
+      // iter1's node, iter1 and iter2 are freed and the loop breaks.
       else
         {
           node = iter1 -> node;
@@ -540,7 +540,7 @@ void free_tree( Tree_Node *root_node )
     }
   // Regardless of the node type, the node needs to be freed. 
   free( root_node );
-  // The function returns after evaluating both conditionals
+  // The function returns after evaluating all conditionals.
   return;
   
 }

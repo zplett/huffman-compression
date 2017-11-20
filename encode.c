@@ -65,7 +65,7 @@ void breakdown_character( char ch, FILE *output )
 }
 
 /** Recursive pre-order tree traversal */
-void pre_order( Tree_Node *root_node, char *bit_string, FILE *output  )
+void pre_order( Tree_Node *root_node, FILE *output  )
 {
   // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
   // no more levels of the tree to be traversed.
@@ -84,11 +84,11 @@ void pre_order( Tree_Node *root_node, char *bit_string, FILE *output  )
       shift( 0, output );
       if( root_node -> left != NULL )
         {
-          pre_order( root_node -> left, bit_string, output );
+          pre_order( root_node -> left, output );
         }
       if( root_node -> right != NULL )
         {
-          pre_order( root_node -> right, bit_string, output );
+          pre_order( root_node -> right, output );
         }
       return;
     }
@@ -167,7 +167,7 @@ int main( int argc, char *argv[] )
   insert( chars, 0, EOF );
   // Build the tree and get the root
   Tree_Node *root = build_huff_tree( chars );
-  pre_order( root, bit_string, output );
+  pre_order( root, output );
   // Flush the padding
   shift( -1, output );
 

@@ -1,4 +1,4 @@
-1. Zac Plett and Ezra Goss
+1. Zac Plett and Ezra Goss. We both would like to use one of our late days on this assignment. 
 
 2. Our programs ( encode.c and decode.c ) can be used to encode information using a Huffman Tree or
    decode input encoded information.
@@ -19,3 +19,5 @@
 6. Interesting design choices: index out of bounds error on list traversal returns the tail, tried to encapsulate all input logic in a few functions to simulate the ability to read in bit by bit in the rest of our program.
 
 7. There are currently no valgrind errors or warnings. 
+
+We affirm that we have adhered to the honor code on this assignment. 
