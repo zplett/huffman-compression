@@ -10,6 +10,19 @@
 
 int ascii_list[ 256 ] = { 0 };
 
+
+int check_freq( char value )
+{
+  if( value != EOF )
+    return ascii_list[ (int) value ];
+
+  else if( value == EOF )
+    return 1;
+
+  fprintf( stderr, "Index does not exist: no frequency available\n" );
+  exit( -1 );
+}
+
 /** Struct for each node of the tree */
 struct tree_node_s
 {
@@ -77,12 +90,10 @@ Iterator* get( Linked_List *list, int index )
   // If the while loop finished then it hit tail ( if index is 0 and the list is empty, it will always return tail )
   if( index == 0 )
     {
-      //fprintf( stderr, "Get called on empty list. Iterator returns tail.\n");
       return iter;
     }
   else if( index != 0 )
     {
-      //fprintf( stderr, "Iterator index out of bounds. Iterator returns tail.\n");
       return iter;
     }
   return iter;
@@ -302,7 +313,7 @@ Iterator* insertion_sort( Linked_List *list )
 	  // is the value of the node. Otherwise, the node type is invalid and a stderr message is printed
 	  // before returning the iterator. 
 	  if( inner -> node -> type == LEAF )
-	    freq = ascii_list[ (int) inner -> node -> value ];
+	    freq = check_freq( inner -> node -> value ); //ascii_list[ (int) inner -> node -> value ];
 	  else if( inner -> node -> type == INTERNAL )
 	    freq = inner -> node -> value;
 	  else
@@ -311,7 +322,7 @@ Iterator* insertion_sort( Linked_List *list )
 	      return iter;
 	    } 
 	  if( inner -> node -> prev -> type == LEAF )
-	    prev_freq = ascii_list[ (int) inner -> node -> prev -> value ];
+	    prev_freq = check_freq( inner -> node -> prev -> value ); // ascii_list[ (int) inner -> node -> prev -> value ];
 	  else if( inner -> node -> prev -> type == INTERNAL )
 	    prev_freq = inner -> node -> prev -> value;
 	  else
@@ -411,8 +422,8 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
   // Internal nodes will have their frequencies stored as that node's value while leaf nodes
   // have their frequencies stored in the ascii_list. These conditional statements handle which method
   // to use when accessing the frequencies. 
-  int left_sum = iter1 -> node -> type == INTERNAL ? iter1 -> node -> value : ascii_list[ ascii_index1 ];
-  int right_sum = iter2 -> node -> type == INTERNAL ? iter2 -> node -> value : ascii_list[ ascii_index2 ];
+  int left_sum = iter1 -> node -> type == INTERNAL ? iter1 -> node -> value : check_freq( ascii_index1 ); //ascii_list[ ascii_index1 ];
+  int right_sum = iter2 -> node -> type == INTERNAL ? iter2 -> node -> value : check_freq( ascii_index2 );  //ascii_list[ ascii_index2 ];
   root -> value = left_sum + right_sum;
   // Make the children be the two parameter nodes
   root -> left = iter1 -> node;
@@ -496,20 +507,19 @@ Tree_Node* build_huff_tree( Linked_List *list )
       if( iter2 -> node != list -> tail )
         {
           // Instantiate iterators with first and second node
-          print_list( list );
           fuse( list, iter1, iter2 );
-	  free( iter1 );
-	  free( iter2 );
-	}
+          free( iter1 );
+          free( iter2 );
+        }
       else
-	{
-	  node = iter1 -> node;
-	  free( iter1 );
-	  free( iter2 );
-	  break;
-	}
+        {
+          node = iter1 -> node;
+          free( iter1 );
+          free( iter2 );
+          break;
+        }
     }
-
+  
   return node;
   
 } 
