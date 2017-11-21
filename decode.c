@@ -203,7 +203,7 @@ char next_output( FILE *file, Tree_Node *node )
 {
 
   // While this node has a left and right child
-  while( ( node -> left != NULL ) && ( node -> right != NULL ) )
+  while( node -> type != LEAF )
     {
       // The traversal direction is gathered from reading in the next bit
       int direction = read_bit( file );
