@@ -13,7 +13,7 @@
 
 
 /** Shift a character 1 bit and output if it reaches the capacity of the byte */
-void shift( int binary, FILE *output )
+void shift( int binary, FILE *output  )
 {
   // This is the output byte
   static char byte = 0;
@@ -95,7 +95,74 @@ void pre_order( Tree_Node *root_node, FILE *output  )
   
 }
 
+/** Recursive find tree traversal */
+int find_helper( Linked_List *list, Tree_Node *root_node, char target, FILE *output  )
+{
+  // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
+  // no more levels of the tree to be traversed.
+  if( root_node -> type == LEAF )
+    {
+      if( root_node -> value != target )
+        {
+          return 0;
+        }
+      else if( root_node -> value == target )
+        {
+          return 1;
+        }
+    }
+  // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
+  // a traversal to the left and a 1 indicating a traversal to the right. 
+  else
+    {
+      if( root_node -> left != NULL )
+        {
+          if( find_helper( list, root_node -> left, target, output ) == 1)
+            {
+              // Enter in 0 to the path
+              insert( list, 0, 0 );
+              return 1;
+            }
+        }
+      if( root_node -> right != NULL )
+        {
+          if( find_helper( list, root_node -> right, target, output ) == 1 )
+            {
+              // Enter in 1 to the path
+              insert( list, 0, 1 );
+              return 1;
+            }
+        }
+      return 0;
+    }
+  return 0;
+}
 
+/** Find and print the target value */
+void find_path( Tree_Node *root_node, char target, FILE *output )
+{
+  // Build the list
+  Linked_List *list = init_list();     
+  // Call the find helper recursive function
+  find_helper( list, root_node, target, output );
+  // Print out path
+  Iterator *iter = init_iter( list );
+  while( iter -> node != list -> tail )
+    {
+      if( iter -> node -> value == 0 )
+        shift( 0, output );
+      else if( iter -> node -> value == 1 )
+        shift( 1, output );
+
+      iter -> node = iter -> node -> next;
+    }
+  // Free memory
+  free_list( list );
+  free( list -> head );
+  free( list );
+  free( iter );
+  
+}
 
 /** Function used to open and read the input file */
 FILE* open_file( int argc, char *argv[] )
@@ -168,9 +235,18 @@ int main( int argc, char *argv[] )
   // Build the tree and get the root
   Tree_Node *root = build_huff_tree( chars );
   pre_order( root, output );
+  find_path( root, EOF, output );
+  fclose( file );
+  file = open_file( argc, argv );
+  for( int c = fgetc( file ); c != EOF; c = fgetc( file ) )
+    {
+      find_path( root, c, output );
+    }
+  find_path( root, EOF, output );
   // Flush the padding
   shift( -1, output );
-
+  
+  
 
   free_tree( root );
   free( chars -> head );
