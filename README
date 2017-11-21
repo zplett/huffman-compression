@@ -1,4 +1,4 @@
-1. Zac Plett and Ezra Goss. We both would like to use one of our late days on this assignment. 
+OB1. Zac Plett and Ezra Goss. We both would like to use one of our late days on this assignment. 
 
 2. Our programs ( encode.c and decode.c ) can be used to encode information using a Huffman Tree or
    decode input encoded information.
@@ -11,6 +11,8 @@
 	- decode.h: Header file for methods within decode.c.
 	- encode.c: Executable used to encode information with Huffman's algorithm.
 	- encode.h: Header file for methods within encode.c.
+	- encode.1: A manual page for encode.c
+	- decode.1: A manual page for decode.c
 
 4. There are no known bugs and all functionality is complete.
 
