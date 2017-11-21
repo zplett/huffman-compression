@@ -8,6 +8,7 @@
 #include <stdlib.h>
 #include <limits.h>
 #include "list.c"
+#include "list.h"
 #include "decode.h"
 
 /** Recursive pre-order tree traversal */
@@ -35,6 +36,28 @@ void pre_order( Tree_Node *root_node )
 	}
       return;
     }
+
+}
+
+/** Open output file */
+FILE* open_output( int argc, char *argv[] )
+{
+
+  // Filename for output
+  char *filename = NULL;
+  // If there is a third argument, make the filename that argument
+  if( argc > 2 )
+    filename = argv[2];
+  // Output file
+  FILE *file = NULL;
+  if( filename != NULL )
+    // Opens the file used for output
+    file = fopen( filename, "w" );
+  else
+    // If there's no output file then output is redirected to stdout
+    return stdout;
+  // Otherwise the output file gets returned
+  return file;
 
 }
 
@@ -107,7 +130,6 @@ int read_bit( FILE *file )
   if( count == 0 )
     {
       ref = fgetc( file );
-      //printf( "%c\n", ref );
       byte = shift_bit();
     }
     ++count;
@@ -176,17 +198,69 @@ Tree_Node* recursive_construct( Tree_Node *node, FILE *file )
   
 }
 
+/** Gets the next character to be output after decoding */
+char next_output( FILE *file, Tree_Node *node )
+{
+
+  while( ( node -> left != NULL ) && ( node -> right != NULL ) )
+    {
+      int direction = read_bit( file );
+      if( direction == 0 )
+	node = node -> left;
+      else
+	node = node -> right;
+    }
+  return node -> value;
+
+} 
+
+/** Wrapper function to print the output by calling the next_output() function until reaching 
+ EOF */
+void output_wrapper( FILE *file, FILE *output, Tree_Node *root )
+{
+
+  while( 1 )
+    {
+      char c = next_output( file, root );
+      if( c == EOF )
+	  break;
+      else
+	fprintf( output, "%c", c );
+    }
+  return;
+  
+}
+
+/** Places eof in the right position of the tree */
+void place_eof( FILE *file, Tree_Node *root )
+{
+  
+  while( root -> type != LEAF )
+    {
+      int direction = read_bit( file );
+      if( direction == 0 )
+	root = root -> left;
+      else
+	root = root -> right;
+    }
+  root -> value = EOF;
+  
+}
+
 /** Main Function */
 int main( int argc, char *argv[] )
 {
 
   // Input file
   FILE *file = open_file( argc, argv );
+  FILE *output = open_output( argc, argv );
   Tree_Node *root = construct_tree( file );
-  pre_order( root );
+  place_eof( file, root );
+  output_wrapper( file, output, root );
   free_tree( root );
   // Closes the file and returns 0 as the program ran successfully
   fclose( file );
+  fclose( output );
   return 0;
   
 }

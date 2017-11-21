@@ -10,15 +10,15 @@
 
 int ascii_list[ 256 ] = { 0 };
 
-
+/** Checks the frequency of a given character */
 int check_freq( char value )
 {
+  // As long as the value isn't EOF, the frequency is returned
   if( value != EOF )
     return ascii_list[ (int) value ];
-
+  // Otherwise 1 is returned
   else if( value == EOF )
     return 1;
-
   fprintf( stderr, "Index does not exist: no frequency available\n" );
   exit( -1 );
 }
@@ -523,7 +523,6 @@ Tree_Node* build_huff_tree( Linked_List *list )
   return node;
   
 } 
-
 
 /** Recursive pre-order tree traversal for freeing the tree */
 void free_tree( Tree_Node *root_node )

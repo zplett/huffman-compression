@@ -20,10 +20,10 @@ encode.o: encode.c list.c list.h
 encode: list.o encode.o list.h
 	$(CC) encode.o -o encode 
 
-decode.o: decode.c list.h
-	$(CC) -c decode.c
+decode.o: decode.c list.c list.h decode.h
+	$(CC) -c list.c decode.c
 
-decode: decode.o list.h
+decode: list.o decode.o decode.h list.h
 	$(CC) decode.o -o decode
 
 clean:
