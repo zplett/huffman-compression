@@ -202,14 +202,19 @@ Tree_Node* recursive_construct( Tree_Node *node, FILE *file )
 char next_output( FILE *file, Tree_Node *node )
 {
 
+  // While this node has a left and right child
   while( ( node -> left != NULL ) && ( node -> right != NULL ) )
     {
+      // The traversal direction is gathered from reading in the next bit
       int direction = read_bit( file );
+      // If the direction is 0, traverse left, otherwise the direction is one and the traversal
+      // should go the right child.
       if( direction == 0 )
 	node = node -> left;
       else
 	node = node -> right;
     }
+  // Once the leaf has been reached, return this node's value
   return node -> value;
 
 } 
@@ -219,9 +224,12 @@ char next_output( FILE *file, Tree_Node *node )
 void output_wrapper( FILE *file, FILE *output, Tree_Node *root )
 {
 
+  // Infinite while loop to get all the characters that were encoded
   while( 1 )
     {
+      // Gets the next character for the output stream
       char c = next_output( file, root );
+      // If this is EOF, break. Otherwise, print the character to the entered output file
       if( c == EOF )
 	  break;
       else
@@ -234,15 +242,20 @@ void output_wrapper( FILE *file, FILE *output, Tree_Node *root )
 /** Places eof in the right position of the tree */
 void place_eof( FILE *file, Tree_Node *root )
 {
-  
+
+  // Traverses the tree until a leaf is reached
   while( root -> type != LEAF )
     {
+      // The direction ( left or right ) to traverse is chosen from reading the next bit in the file
       int direction = read_bit( file );
+      // If the direction is 0, go right, otherwise ( the direction is 1 ), go left.
       if( direction == 0 )
 	root = root -> left;
       else
 	root = root -> right;
     }
+  // Once the leaf has been reached with the EOF path from the encoded file, set this node's
+  // value to be EOF. 
   root -> value = EOF;
   
 }
