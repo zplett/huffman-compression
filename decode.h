@@ -38,3 +38,23 @@ char read_byte( FILE *file );
 #define RECURSIVE_CONSTRUCT
 Tree_Node* recursive_construct( Tree_Node *node, FILE *file );
 #endif
+
+#ifndef OPEN_OUTPUT
+#define OPEN_OUTPUT
+FILE* open_output( int argc, char *argv[] );
+#endif
+
+#ifndef NEXT_OUTPUT
+#define NEXT_OUTPUT
+char next_output( FILE *file, Tree_Node *node );
+#endif
+
+#ifndef OUTPUT_WRAPPER
+#define OUTPUT_WRAPPER
+void output_wrapper( FILE *file, FILE *output, Tree_Node *root );
+#endif
+
+#ifndef PLACE_EOF
+#define PLACE_EOF
+void place_eof( FILE *file, Tree_Node *root );
+#endif
