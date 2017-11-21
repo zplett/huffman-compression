@@ -11,14 +11,15 @@
 #include <string.h>
 #include "list.c"
 
-
 /** Shift a character 1 bit and output if it reaches the capacity of the byte */
 void shift( int binary, FILE *output  )
 {
+  
   // This is the output byte
   static char byte = 0;
-  // Counter to checj against CHAR_BIT
+  // Counter to check against CHAR_BIT
   static int counter = 0;
+  // Make the appropriate shifts based on binary value
   if( binary == 0 ){
     byte = byte << 1;
   }
@@ -27,32 +28,33 @@ void shift( int binary, FILE *output  )
       byte = byte << 1;
       byte = byte | 1;
     }
-
   ++counter;
-  
+  // If counter is CHAR_BIT then print the char and reset byte and counter
   if( counter == CHAR_BIT )
     {
       fprintf( output, "%c", byte );
       byte = 0;
       counter = 0;
     }
-
+  // If binary == -1 account for padding
   if( binary == -1 )
     {
       // Make sure the padding is in the least position
       byte = byte << ( CHAR_BIT - ( counter - 1 ) );
       fprintf( output, "%c", byte );
     }
+  
 }
 
 /** Break character into bits and then shift output byte appropriately */
 void breakdown_character( char ch, FILE *output )
 {
+
   // Reference byte
   unsigned char byte = 1;
   // Put reference byte into proper position
   byte = byte << ( CHAR_BIT - 1 );
-
+  // Iterates to CHAR_BIT and does the proper shifts
   for( int i = 0; i < CHAR_BIT; ++i )
   {
     if( ( byte & ch ) != 0 )
@@ -67,6 +69,7 @@ void breakdown_character( char ch, FILE *output )
 /** Recursive pre-order tree traversal */
 void pre_order( Tree_Node *root_node, FILE *output  )
 {
+  
   // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
   // no more levels of the tree to be traversed.
   if( root_node -> type == LEAF )
@@ -98,6 +101,7 @@ void pre_order( Tree_Node *root_node, FILE *output  )
 /** Recursive find tree traversal */
 int find_helper( Linked_List *list, Tree_Node *root_node, char target, FILE *output  )
 {
+  
   // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
   // no more levels of the tree to be traversed.
   if( root_node -> type == LEAF )
@@ -136,11 +140,13 @@ int find_helper( Linked_List *list, Tree_Node *root_node, char target, FILE *out
       return 0;
     }
   return 0;
+
 }
 
 /** Find and print the target value */
 void find_path( Tree_Node *root_node, char target, FILE *output )
 {
+
   // Build the list
   Linked_List *list = init_list();     
   // Call the find helper recursive function
@@ -192,19 +198,19 @@ FILE* open_file( int argc, char *argv[] )
 FILE* open_output( int argc, char *argv[] )
 {
 
+  // Filename marker
   char *filename = NULL;
-
   // If there is a third argument, make the filename that argument
   if( argc > 1 )
     filename = argv[2];
-
+  // File to be used for output stream
   FILE *file = NULL;
-  
+  // If filename isn't null, use open this file and use it for output
   if( filename != NULL )
     file = fopen( filename, "w" );
+  // Otherwise, return the stdout output stream
   else
     return stdout;
-
   return file;
   
 }
@@ -215,7 +221,6 @@ int main( int argc, char *argv[] )
   // Open the files for input and output 
   FILE *file = open_file( argc, argv );
   FILE *output = open_output( argc, argv );
-  
   // Fill the ascii tree with frequencies
   for( int ch = fgetc( file ); ch != EOF;  ch = fgetc( file ) )
     {
@@ -238,6 +243,7 @@ int main( int argc, char *argv[] )
   find_path( root, EOF, output );
   fclose( file );
   file = open_file( argc, argv );
+  // Finds path
   for( int c = fgetc( file ); c != EOF; c = fgetc( file ) )
     {
       find_path( root, c, output );
@@ -245,9 +251,7 @@ int main( int argc, char *argv[] )
   find_path( root, EOF, output );
   // Flush the padding
   shift( -1, output );
-  
-  
-
+  // Frees allocated memory
   free_tree( root );
   free( chars -> head );
   free( chars -> tail );

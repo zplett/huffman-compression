@@ -266,10 +266,15 @@ int main( int argc, char *argv[] )
 
   // Input file
   FILE *file = open_file( argc, argv );
+  // Output file
   FILE *output = open_output( argc, argv );
+  // Root of the tree
   Tree_Node *root = construct_tree( file );
+  // Places eof in the tree
   place_eof( file, root );
+  // Gets the output
   output_wrapper( file, output, root );
+  // Frees the tree
   free_tree( root );
   // Closes the file and returns 0 as the program ran successfully
   fclose( file );
