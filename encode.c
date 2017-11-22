@@ -4,6 +4,7 @@
  *
  */
 
+/** Included libraries */
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>
@@ -192,7 +193,6 @@ int find_eof_helper( Linked_List *list, Tree_Node *root_node, FILE *output  )
   return 0;
 
 }
-
 
 /** Find and print the path of EOF  */
 void find_eof( Tree_Node *root_node, FILE *output )

@@ -4,6 +4,7 @@
  *
  */
 
+/** Struct definitions */
 #ifndef TYPEDEF_LISTS
 #define TYPEDEF_LISTS
 typedef struct tree_node_s Tree_Node;
@@ -11,6 +12,7 @@ typedef struct iterator_s Iterator;
 typedef struct linked_list_s Linked_List;
 #endif
 
+/** Enumerator definitions */
 #ifndef NODE_TYPE
 #define NODE_TYPE
 typedef enum node_type { INTERNAL, LEAF } node_type;
@@ -21,6 +23,7 @@ typedef enum node_type { INTERNAL, LEAF } node_type;
 typedef enum bool { FALSE, TRUE } bool;
 #endif
 
+/** Function definitions */
 #ifndef GET
 #define GET
 Iterator* get( Linked_List *list, int index ); 
