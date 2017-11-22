@@ -1,0 +1,154 @@
+\hypertarget{list_8c}{}\section{list.\+c File Reference}
+\label{list_8c}\index{list.\+c@{list.\+c}}
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$stdlib.\+h$>$}\newline
+{\ttfamily \#include \char`\"{}list.\+h\char`\"{}}\newline
+\subsection*{Data Structures}
+\begin{DoxyCompactItemize}
+\item 
+struct \mbox{\hyperlink{structtree__node__s}{tree\+\_\+node\+\_\+s}}
+\item 
+struct \mbox{\hyperlink{structlinked__list__s}{linked\+\_\+list\+\_\+s}}
+\item 
+struct \mbox{\hyperlink{structiterator__s}{iterator\+\_\+s}}
+\end{DoxyCompactItemize}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8c_a8e524bbabcd1aa59231fc1590034d6dc}{get}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list, int index)
+\item 
+\mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}} $\ast$ \mbox{\hyperlink{list_8c_ac2527342441e5d73c408522dab528d1c}{init\+\_\+tree\+\_\+leaf}} ()
+\item 
+\mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}} $\ast$ \mbox{\hyperlink{list_8c_aa74059990bd0beada7c520b77d36d084}{init\+\_\+tree\+\_\+node}} ()
+\item 
+\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$ \mbox{\hyperlink{list_8c_a64c721d2cad45f2baf10a76179280c32}{init\+\_\+list}} ()
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8c_ab74964598dcb6a07686b04374f1cbc1f}{init\+\_\+iter}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list)
+\item 
+int \mbox{\hyperlink{list_8c_a4799ce8021a80f9a2b4ffc418914e5aa}{verify\+\_\+freq}} (char value)
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8c_aa7fd22cb851ff9c99d3eb7a801a2191f}{insert}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list, int index, char value)
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8c_a0f832bcb2a6b8a4a7906f0711717e184}{find}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list, char value)
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8c_a5dd73502dea5d6cf8b06315e5694c5f8}{remove\+\_\+node}} (\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$iter)
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8c_a9bdcf02c1cc7d8580e686d7c05330e95}{insert\+\_\+ready\+\_\+node}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list, int index, \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$iter)
+\item 
+\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$ \mbox{\hyperlink{list_8c_a8132183ce96a785cf72ac2e1e9523a84}{insertion\+\_\+sort}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list)
+\item 
+void \mbox{\hyperlink{list_8c_aeb67bee72def91bf3479d827bbee1b2c}{swap}} (\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$iter1, \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$iter2)
+\item 
+void \mbox{\hyperlink{list_8c_a3f269c8d66201f8c6fa5987a48259438}{fuse}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list, \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$iter1, \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$iter2)
+\item 
+void \mbox{\hyperlink{list_8c_a93ed820191fb7855655862f9038e4877}{print\+\_\+list}} (\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$list)
+\item 
+int \mbox{\hyperlink{list_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}{main}} ()
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{list_8c_a382215aa7bc32135648056b261308bdd}{ascii\+\_\+list}} \mbox{[}256\mbox{]} = \{ 0 \}
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{list_8c_a0f832bcb2a6b8a4a7906f0711717e184}\label{list_8c_a0f832bcb2a6b8a4a7906f0711717e184}} 
+\index{list.\+c@{list.\+c}!find@{find}}
+\index{find@{find}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{find()}{find()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ find (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list,  }\item[{char}]{value }\end{DoxyParamCaption})}
+
+Find the given value in the list or return a N\+U\+LL iterator \mbox{\Hypertarget{list_8c_a3f269c8d66201f8c6fa5987a48259438}\label{list_8c_a3f269c8d66201f8c6fa5987a48259438}} 
+\index{list.\+c@{list.\+c}!fuse@{fuse}}
+\index{fuse@{fuse}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{fuse()}{fuse()}}
+{\footnotesize\ttfamily void fuse (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list,  }\item[{\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$}]{iter1,  }\item[{\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$}]{iter2 }\end{DoxyParamCaption})}
+
+Fuses two nodes to make a tree \mbox{\Hypertarget{list_8c_a8e524bbabcd1aa59231fc1590034d6dc}\label{list_8c_a8e524bbabcd1aa59231fc1590034d6dc}} 
+\index{list.\+c@{list.\+c}!get@{get}}
+\index{get@{get}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{get()}{get()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ get (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list,  }\item[{int}]{index }\end{DoxyParamCaption})}
+
+Function that gets the node at a given index and returns and iterator \mbox{\Hypertarget{list_8c_ab74964598dcb6a07686b04374f1cbc1f}\label{list_8c_ab74964598dcb6a07686b04374f1cbc1f}} 
+\index{list.\+c@{list.\+c}!init\+\_\+iter@{init\+\_\+iter}}
+\index{init\+\_\+iter@{init\+\_\+iter}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{init\+\_\+iter()}{init\_iter()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ init\+\_\+iter (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list }\end{DoxyParamCaption})}
+
+Initializes the iterator of a list \mbox{\Hypertarget{list_8c_a64c721d2cad45f2baf10a76179280c32}\label{list_8c_a64c721d2cad45f2baf10a76179280c32}} 
+\index{list.\+c@{list.\+c}!init\+\_\+list@{init\+\_\+list}}
+\index{init\+\_\+list@{init\+\_\+list}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{init\+\_\+list()}{init\_list()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}}$\ast$ init\+\_\+list (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initialize a list \mbox{\Hypertarget{list_8c_ac2527342441e5d73c408522dab528d1c}\label{list_8c_ac2527342441e5d73c408522dab528d1c}} 
+\index{list.\+c@{list.\+c}!init\+\_\+tree\+\_\+leaf@{init\+\_\+tree\+\_\+leaf}}
+\index{init\+\_\+tree\+\_\+leaf@{init\+\_\+tree\+\_\+leaf}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{init\+\_\+tree\+\_\+leaf()}{init\_tree\_leaf()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}}$\ast$ init\+\_\+tree\+\_\+leaf (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initializes a tree leaf node \mbox{\Hypertarget{list_8c_aa74059990bd0beada7c520b77d36d084}\label{list_8c_aa74059990bd0beada7c520b77d36d084}} 
+\index{list.\+c@{list.\+c}!init\+\_\+tree\+\_\+node@{init\+\_\+tree\+\_\+node}}
+\index{init\+\_\+tree\+\_\+node@{init\+\_\+tree\+\_\+node}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{init\+\_\+tree\+\_\+node()}{init\_tree\_node()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_a68f0ccc88265f29ccc7b9c8133456b67}{Tree\+\_\+\+Node}}$\ast$ init\+\_\+tree\+\_\+node (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Initializes an internal tree node \mbox{\Hypertarget{list_8c_aa7fd22cb851ff9c99d3eb7a801a2191f}\label{list_8c_aa7fd22cb851ff9c99d3eb7a801a2191f}} 
+\index{list.\+c@{list.\+c}!insert@{insert}}
+\index{insert@{insert}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{insert()}{insert()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ insert (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list,  }\item[{int}]{index,  }\item[{char}]{value }\end{DoxyParamCaption})}
+
+Function that assigns the iterator to the given index \mbox{\Hypertarget{list_8c_a9bdcf02c1cc7d8580e686d7c05330e95}\label{list_8c_a9bdcf02c1cc7d8580e686d7c05330e95}} 
+\index{list.\+c@{list.\+c}!insert\+\_\+ready\+\_\+node@{insert\+\_\+ready\+\_\+node}}
+\index{insert\+\_\+ready\+\_\+node@{insert\+\_\+ready\+\_\+node}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{insert\+\_\+ready\+\_\+node()}{insert\_ready\_node()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ insert\+\_\+ready\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list,  }\item[{int}]{index,  }\item[{\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$}]{iter }\end{DoxyParamCaption})}
+
+Insert a premade node \mbox{\Hypertarget{list_8c_a8132183ce96a785cf72ac2e1e9523a84}\label{list_8c_a8132183ce96a785cf72ac2e1e9523a84}} 
+\index{list.\+c@{list.\+c}!insertion\+\_\+sort@{insertion\+\_\+sort}}
+\index{insertion\+\_\+sort@{insertion\+\_\+sort}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{insertion\+\_\+sort()}{insertion\_sort()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ insertion\+\_\+sort (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list }\end{DoxyParamCaption})}
+
+Insertion sort \mbox{\Hypertarget{list_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}\label{list_8c_ae66f6b31b5ad750f1fe042a706a4e3d4}} 
+\index{list.\+c@{list.\+c}!main@{main}}
+\index{main@{main}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+Main function \mbox{\Hypertarget{list_8c_a93ed820191fb7855655862f9038e4877}\label{list_8c_a93ed820191fb7855655862f9038e4877}} 
+\index{list.\+c@{list.\+c}!print\+\_\+list@{print\+\_\+list}}
+\index{print\+\_\+list@{print\+\_\+list}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{print\+\_\+list()}{print\_list()}}
+{\footnotesize\ttfamily void print\+\_\+list (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_a275467ffca9c68b35d2692d45bd90122}{Linked\+\_\+\+List}} $\ast$}]{list }\end{DoxyParamCaption})}
+
+Prints the elements of a list \mbox{\Hypertarget{list_8c_a5dd73502dea5d6cf8b06315e5694c5f8}\label{list_8c_a5dd73502dea5d6cf8b06315e5694c5f8}} 
+\index{list.\+c@{list.\+c}!remove\+\_\+node@{remove\+\_\+node}}
+\index{remove\+\_\+node@{remove\+\_\+node}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{remove\+\_\+node()}{remove\_node()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}}$\ast$ remove\+\_\+node (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$}]{iter }\end{DoxyParamCaption})}
+
+Remove a node from the linked list \mbox{\Hypertarget{list_8c_aeb67bee72def91bf3479d827bbee1b2c}\label{list_8c_aeb67bee72def91bf3479d827bbee1b2c}} 
+\index{list.\+c@{list.\+c}!swap@{swap}}
+\index{swap@{swap}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{swap()}{swap()}}
+{\footnotesize\ttfamily void swap (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$}]{iter1,  }\item[{\mbox{\hyperlink{list_8h_aa4b0dc022ab20a1d6dcaedb22f182619}{Iterator}} $\ast$}]{iter2 }\end{DoxyParamCaption})}
+
+Swaps the value and the children \mbox{\Hypertarget{list_8c_a4799ce8021a80f9a2b4ffc418914e5aa}\label{list_8c_a4799ce8021a80f9a2b4ffc418914e5aa}} 
+\index{list.\+c@{list.\+c}!verify\+\_\+freq@{verify\+\_\+freq}}
+\index{verify\+\_\+freq@{verify\+\_\+freq}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{verify\+\_\+freq()}{verify\_freq()}}
+{\footnotesize\ttfamily int verify\+\_\+freq (\begin{DoxyParamCaption}\item[{char}]{value }\end{DoxyParamCaption})}
+
+Verifies whether or not a value has been entered already 
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{list_8c_a382215aa7bc32135648056b261308bdd}\label{list_8c_a382215aa7bc32135648056b261308bdd}} 
+\index{list.\+c@{list.\+c}!ascii\+\_\+list@{ascii\+\_\+list}}
+\index{ascii\+\_\+list@{ascii\+\_\+list}!list.\+c@{list.\+c}}
+\subsubsection{\texorpdfstring{ascii\+\_\+list}{ascii\_list}}
+{\footnotesize\ttfamily int ascii\+\_\+list\mbox{[}256\mbox{]} = \{ 0 \}}
+

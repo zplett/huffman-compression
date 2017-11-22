@@ -1,1 +1,25 @@
-README
+1. Zac Plett and Ezra Goss. We both would like to use two of our late days on this assignment. 
+
+2. Our programs ( encode.c and decode.c ) can be used to encode information using a Huffman Tree or
+   decode input encoded information.
+
+3. Files:
+	- list.c: Contains our list, tree and node structures and the related functionality of
+	  	  the Huffman Trees.
+	- list.h: The header file for methods and structs used within list.c, encode.c, and decode.c.
+	- decode.c: Executable used to decode an encoded Huffman Tree.
+	- decode.h: Header file for methods within decode.c.
+	- encode.c: Executable used to encode information with Huffman's algorithm.
+	- encode.h: Header file for methods within encode.c.
+	- encode.1: A manual page for encode.c
+	- decode.1: A manual page for decode.c
+
+4. Everything works except encode for binary files. Something about the way the tree is constructed for binary files messes up and the files becomes drastically large. I think it has something to do with how we are reading in or storing null bytes or EOF bytes but we didn't have the time to solve this issue. However, decode works fine for binary files and I have included an executable "rencode" that is Hoyle's test encode so that you can properly test decode. Encode works fine on text files of varying sizes. 
+
+5. We spent an estimated 14 hours working on this lab.
+
+6. Tried to encapsulate all input logic in a few functions to simulate the ability to read in bit by bit in the rest of our program.
+
+7. There are currently no valgrind errors or warnings. 
+
+We affirm that we have adhered to the honor code on this assignment. 
