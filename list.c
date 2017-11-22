@@ -374,9 +374,6 @@ void fuse( Linked_List *list, Iterator *iter1, Iterator *iter2 )
       fprintf( stderr, "Invalid node type.\n" );
       return;
       }
-  // Store the integer ascii value of each node for indexing the frequency array
-  int ascii_index1 = (int) iter1 -> node -> value;
-  int ascii_index2 = (int) iter2 -> node -> value;
   // Create a root internal node with value being the sum of the frequencies of both parameter nodes
   Tree_Node *root = init_tree_node();
   Iterator *iter_root = malloc( sizeof( *iter_root ) );
