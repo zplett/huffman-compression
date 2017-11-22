@@ -16,6 +16,11 @@ typedef struct linked_list_s Linked_List;
 typedef enum node_type { INTERNAL, LEAF } node_type;
 #endif
 
+#ifndef IS_EOF
+#define IS_EOF
+typedef enum bool { FALSE, TRUE } bool;
+#endif
+
 #ifndef GET
 #define GET
 Iterator* get( Linked_List *list, int index ); 
@@ -48,18 +53,13 @@ Iterator* find( Linked_List*, char);
 
 #ifndef INSERT
 #define INSERT
-void insert( Linked_List *list, int index , char value );
+void insert( Linked_List *list, char value );
 #endif
 
 #ifndef REMOVE
 #define REMOVE
 Iterator* remove_node( Iterator *iter );
 #endif 
-
-#ifndef SWAP
-#define SWAP
-void swap( Iterator *iter1, Iterator *iter2 );
-#endif
 
 #ifndef PRINT_LIST
 #define PRINT_LIST
@@ -73,7 +73,7 @@ void free_list( Linked_List *list );
 
 #ifndef INSERT_READY_NODE
 #define INSERT_READY_NODE
-void insert_ready_node( Linked_List *list, int index, Iterator *iter );
+void insert_ready_node( Linked_List *list, Iterator *iter );
 #endif
 
 #ifndef FREE_LIST

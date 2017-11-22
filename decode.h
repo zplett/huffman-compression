@@ -46,7 +46,7 @@ FILE* open_output( int argc, char *argv[] );
 
 #ifndef NEXT_OUTPUT
 #define NEXT_OUTPUT
-char next_output( FILE *file, Tree_Node *node );
+Tree_Node* next_output( FILE *file, Tree_Node *node );
 #endif
 
 #ifndef OUTPUT_WRAPPER

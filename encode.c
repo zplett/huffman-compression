@@ -74,10 +74,13 @@ void pre_order( Tree_Node *root_node, FILE *output  )
   // no more levels of the tree to be traversed.
   if( root_node -> type == LEAF )
     {
+      
       // Print a 1 bit
       shift( 1, output );
       // Print the character
       breakdown_character( root_node -> value, output );
+      
+      //printf("%c\n", root_node -> value  );
       return;
     }
   // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
@@ -87,10 +90,12 @@ void pre_order( Tree_Node *root_node, FILE *output  )
       shift( 0, output );
       if( root_node -> left != NULL )
         {
+          //printf("%d\n", 0  );
           pre_order( root_node -> left, output );
         }
       if( root_node -> right != NULL )
         {
+          //printf("%d\n", 1 );
           pre_order( root_node -> right, output );
         }
       return;
@@ -124,7 +129,7 @@ int find_helper( Linked_List *list, Tree_Node *root_node, char target, FILE *out
           if( find_helper( list, root_node -> left, target, output ) == 1)
             {
               // Enter in 0 to the path
-              insert( list, 0, 0 );
+              insert_at( list, 0, 0 );
               return 1;
             }
         }
@@ -133,7 +138,7 @@ int find_helper( Linked_List *list, Tree_Node *root_node, char target, FILE *out
           if( find_helper( list, root_node -> right, target, output ) == 1 )
             {
               // Enter in 1 to the path
-              insert( list, 0, 1 );
+              insert_at( list, 0, 1 );
               return 1;
             }
         }
@@ -142,6 +147,80 @@ int find_helper( Linked_List *list, Tree_Node *root_node, char target, FILE *out
   return 0;
 
 }
+
+/** Recursive find tree traversal */
+int find_eof_helper( Linked_List *list, Tree_Node *root_node, FILE *output  )
+{
+  
+  // Base Case: If this node is a leaf, print its value to indicate so and return as there are 
+  // no more levels of the tree to be traversed.
+  if( root_node -> type == LEAF )
+    {
+      if( root_node -> is_eof == FALSE )
+        {
+          return 0;
+        }
+      else if( root_node -> is_eof == TRUE )
+        {
+          return 1;
+        }
+    }
+  // Recursive case: Preorder traversals call for root, left, right. We print a 0 indicating
+  // a traversal to the left and a 1 indicating a traversal to the right. 
+  else
+    {
+      if( root_node -> left != NULL )
+        {
+          if( find_eof_helper( list, root_node -> left, output ) == 1)
+            {
+              // Enter in 0 to the path
+              insert_at( list, 0, 0 );
+              return 1;
+            }
+        }
+      if( root_node -> right != NULL )
+        {
+          if( find_eof_helper( list, root_node -> right, output ) == 1 )
+            {
+              // Enter in 1 to the path
+              insert_at( list, 0, 1 );
+              return 1;
+            }
+        }
+      return 0;
+    }
+  return 0;
+
+}
+
+
+/** Find and print the path of EOF  */
+void find_eof( Tree_Node *root_node, FILE *output )
+{
+
+  // Build the list
+  Linked_List *list = init_list();     
+  // Call the find helper recursive function
+  find_eof_helper( list, root_node, output );
+  // Print out path
+  Iterator *iter = init_iter( list );
+  while( iter -> node != list -> tail )
+    {
+      if( iter -> node -> value == 0 )
+        shift( 0, output );
+      else if( iter -> node -> value == 1 )
+        shift( 1, output );
+
+      iter -> node = iter -> node -> next;
+    }
+  // Free memory
+  free_list( list );
+  free( list -> head );
+  free( list );
+  free( iter );
+  
+}
+
 
 /** Find and print the target value */
 void find_path( Tree_Node *root_node, char target, FILE *output )
@@ -234,13 +313,21 @@ int main( int argc, char *argv[] )
     {
       // If there is any frequency, insert
       if( ascii_list[i] > 0 )
-        insert( chars, 0, i );
+        insert( chars, i );
     }
-  insert( chars, 0, EOF );
+  // Hard code EOF
+  Tree_Node *eof = init_tree_leaf();
+  eof -> value = -1;
+  eof -> is_eof = TRUE;
+  eof -> freq = 1;
+  Iterator *eof_iter = malloc( sizeof( *eof_iter ) );
+  eof_iter -> node = eof;
+  // End of EOF hard code
+  insert_ready_node( chars, eof_iter );
   // Build the tree and get the root
   Tree_Node *root = build_huff_tree( chars );
   pre_order( root, output );
-  find_path( root, EOF, output );
+  find_eof( root, output );
   fclose( file );
   file = open_file( argc, argv );
   // Finds path
@@ -248,7 +335,7 @@ int main( int argc, char *argv[] )
     {
       find_path( root, c, output );
     }
-  find_path( root, EOF, output );
+  find_eof( root, output );
   // Flush the padding
   shift( -1, output );
   // Frees allocated memory
@@ -256,7 +343,8 @@ int main( int argc, char *argv[] )
   free( chars -> head );
   free( chars -> tail );
   free( chars );
+  free( eof_iter );
   fclose( file );
   fclose( output );
- 
+
 }
