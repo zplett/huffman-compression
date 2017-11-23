@@ -1,4 +1,1 @@
-*.rb linguist-language=C
-*.png
-*.html
-*.css
+static/* linguist-vendored
